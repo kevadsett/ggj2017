@@ -60,6 +60,11 @@ public class TileManager
 			tileType = Tile.eType.Sand;
 		}*/
 
+		if (zZ == TileManager.HEIGHT - 1 && zX > 4 && zX < TileManager.WIDTH - 5)
+		{
+			tileType = Tile.eType.House;
+		}
+
 		var tile = new Tile(zId, zX, zZ, tileType);
 		mTiles.Insert(zId,tile);
 

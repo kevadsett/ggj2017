@@ -9,6 +9,7 @@ public class Tile
 		Sand,
 		Water,
 		Obstacle,
+		House,
 	}
 
 	public int ID { get; private set; }

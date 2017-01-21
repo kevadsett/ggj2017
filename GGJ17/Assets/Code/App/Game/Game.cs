@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Game : MonoBehaviour
 {
+	public static float GameStartTime = 0;
+
 	public static Game Instance;
 
 	public enum eState
@@ -44,17 +46,11 @@ public class Game : MonoBehaviour
 
 	private void Update()
 	{
-		mWaveManager.Update ();
-
-		EntityManager.UpdateEntities (mState);
-
 		switch (mState)
 		{
 		case eState.Game:
-			//update entities
-			//update waves
-			break;
-		case eState.Waves:
+			mWaveManager.Update();
+			EntityManager.UpdateEntities(mState);
 			break;
 		}
 		mTileManager.RenderTiles ();
@@ -73,7 +69,8 @@ public class Game : MonoBehaviour
 		//randomise sheep
 		//place dog
 		//reset tiles
-		Debug.Log("Setting up");
+		GameStartTime = Time.time;
+		Instance.mWaveManager.Reset();
 		Instance.mTileManager.SetupTiles();
 		Instance.mTileManager.SetupGround(Instance.GroundPrefab);
 		Instance.mTileManager.RenderTiles();
@@ -83,5 +80,10 @@ public class Game : MonoBehaviour
 	public static void ShowMainMenu()
 	{
 		Instance.SetState(eState.Menu);
+	}
+
+	public static void GameEnd()
+	{
+		Instance.SetState(eState.GameEnd);
 	}
 }
