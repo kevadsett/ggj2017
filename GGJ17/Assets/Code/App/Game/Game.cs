@@ -47,6 +47,12 @@ public class Game : MonoBehaviour
 	{
 		switch (mState)
 		{
+		case eState.Menu:
+			if (Input.GetKeyUp(KeyCode.Space))
+			{
+				SetupGame();
+			}
+			break;
 		case eState.Game:
 			mWaveManager.Update();
 			EntityManager.UpdateEntities(mState);
@@ -62,7 +68,7 @@ public class Game : MonoBehaviour
 		UIManager.UpdateUI(Instance.mState);
 	}
 
-	public static void SetupGame()
+	private void SetupGame()
 	{
 		//do initial game setup here
 		//randomise sheep

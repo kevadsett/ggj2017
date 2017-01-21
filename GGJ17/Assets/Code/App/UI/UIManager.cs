@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private UIElement[] m_UIElements;
 
+	[SerializeField]
+	private Letterbox[] m_Letterboxes;
+
 
 	private void Awake()
 	{
@@ -21,12 +24,19 @@ public class UIManager : MonoBehaviour
 		{
 			element.Enable(zGameState);
 		}
+
+		if (zGameState == Game.eState.Game)
+		{
+			Instance.UpdateLetterBoxes();
+		}
 	}
 
-	public void StartGame()
+	private void UpdateLetterBoxes()
 	{
-		//send event to change game state
-		Game.SetupGame();
+		foreach (Letterbox letterBox in m_Letterboxes)
+		{
+			letterBox.StartAnimation();
+		}
 	}
 
 	public void GoToMenu()

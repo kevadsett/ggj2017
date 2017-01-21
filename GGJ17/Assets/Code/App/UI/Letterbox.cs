@@ -10,39 +10,48 @@ public class Letterbox : MonoBehaviour
 	[SerializeField]
 	private float m_AnimateTime = 1f;
 
+	[SerializeField]
+	private AnimationCurve m_Curve;
+
 	private float mAnimateStartTime;
 	private RectTransform mRect;
+	private bool mShouldAnimate = false;
 
 	private void Start()
 	{
 		mRect = transform as RectTransform;
 	}
 
-	public void Animate()
+	public void StartAnimation()
 	{
 		mAnimateStartTime = Time.time;
+		mShouldAnimate = true;
 	}
 
 	private void Update()
 	{
+		if (!mShouldAnimate)
+			return;
+
 		float ratio = Mathf.Clamp((Time.time - mAnimateStartTime) / m_AnimateTime, 0f, 1f);
 
-		float moveValue = 0;
+		float moveAmount = 150f;
+		float moveTop = 0;
+		float moveBottom = 0;
+		float animValue = m_Curve.Evaluate(ratio);
+
 		if (m_GoUp)
 		{
-			moveValue = ratio * 150f;
+			moveTop = animValue * moveAmount;
+			moveBottom = animValue * moveAmount;
 		}
 		else
 		{
-			moveValue = -ratio * 150f;
+			moveTop = -animValue * moveAmount;
+			moveBottom = -animValue * moveAmount;
 		}
 
-		Rect newRect = mRect.rect;
-
-		newRect.yMin = moveValue;
-		newRect.yMax = moveValue;
-
-		mRect.offsetMax = new Vector2(0, moveValue);
-		//mRect.rect = newRect;
+		mRect.offsetMin = new Vector2(mRect.offsetMin.x, moveBottom);
+		mRect.offsetMax = new Vector2(mRect.offsetMax.x, moveTop);
 	}
 }
