@@ -17,7 +17,9 @@ public class Game : MonoBehaviour
 
 	private TileManager mTileManager;
 	private eState mState;
+	private WaveManager mWaveManager;
 
+	private bool changed = false;
 
 	private void Start()
 	{
@@ -35,10 +37,13 @@ public class Game : MonoBehaviour
 		new SheepEntity (0, 4, 3, testDog);
 		
 		SetState(eState.Game);
+		mWaveManager = new WaveManager ();
 	}
 
 	private void Update()
 	{
+		mWaveManager.Update ();
+
 		switch (mState)
 		{
 		case eState.Game:
@@ -48,8 +53,6 @@ public class Game : MonoBehaviour
 		case eState.Waves:
 			break;
 		}
-
-		EntityManager.UpdateEntities (mState);
 	}
 
 	private void SetState(eState zNewState)

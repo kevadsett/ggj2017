@@ -13,7 +13,6 @@ public class TileManager
 
 	private GameData mGameData;
 
-
 	public TileManager()
 	{
 		Instance = this;
@@ -40,37 +39,52 @@ public class TileManager
 		{
 			for (int j = 0; j < HEIGHT; ++j)
 			{
-				CreateTile(id, i, j);
+				CreateTile(id, i, j, Tile.eType.Grass);
 				id++;
 			}
 		}
 	}
 
-	private void CreateTile(int zId, int zX, int zZ)
+	private void CreateTile(int zId, int zX, int zZ, Tile.eType zType)
 	{
-		var tileType = Tile.eType.Grass;
+		var tileType = zType; //Tile.eType.Grass;
 
-		if (zX == 0 || zX == WIDTH - 1 || zZ == 0)
+		/*if (zX == 0 || zX == WIDTH - 1 || zZ == 0)
 		{
 			tileType = Tile.eType.Sand;
-		}
+		}*/
 
+	
 		var tile = new Tile(zId, zX, zZ, tileType);
-		mTiles.Add(tile);
+		mTiles.Insert(zId,tile);
 
 		var tilePrefab = TileLibrary.GetTile(tileType);
 		var renderTileObject = GameObject.Instantiate(tilePrefab) as GameObject;
 		var renderTile = renderTileObject.AddComponent<TileRenderer>();
 		renderTile.ID = zId;
-		mRenderTiles.Add(renderTile);
+		mRenderTiles.Insert(zId,renderTile);
+	}
+
+	public static void ReplaceTile(int zX, int zZ, Tile.eType zType) {
+		Tile oldTile = GetTileAtPosition (zX, zZ);
+		int ID = oldTile.ID;
+		int x = oldTile.PosX;
+		int z = oldTile.PosZ;
+		Instance.mTiles.RemoveAt (ID);
+		GameObject.Destroy (Instance.mRenderTiles [ID].gameObject);
+		Instance.mRenderTiles.RemoveAt (ID);
+		Instance.CreateTile (ID, x, z, zType);
 	}
 
 	public void RenderTiles()
 	{
 		foreach (TileRenderer renderTile in mRenderTiles)
 		{
-			var tile = mTiles[renderTile.ID];
-			renderTile.Render (tile);
+			foreach (Tile tile in mTiles) {
+				if (renderTile.ID == tile.ID) {
+					renderTile.Render (tile);
+				}
+			}
 		}
 	}
 
