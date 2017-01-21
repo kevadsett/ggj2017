@@ -1,6 +1,4 @@
-﻿// #define USE_DEBUG_INPUT
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
@@ -43,9 +41,9 @@ public class RollingCube : MonoBehaviour
 		if (delta.z < -0.5f) euler.x -= 90.0f;
 
 		// stability hack
-		euler.x = Mathf.Round (euler.x);
-		euler.y = Mathf.Round (euler.y);
-		euler.z = Mathf.Round (euler.z);
+		euler.x = Mathf.Round (euler.x / 90.0f) * 90.0f;
+		euler.y = Mathf.Round (euler.y / 90.0f) * 90.0f;
+		euler.z = Mathf.Round (euler.z / 90.0f) * 90.0f;
 
 		newRot = Quaternion.Euler (euler) * lastRot;
 
