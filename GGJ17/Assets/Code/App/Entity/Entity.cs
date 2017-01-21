@@ -8,6 +8,8 @@ public class Entity
 	public int PosX { get; private set; }
 	public int PosZ { get; private set; }
 
+	protected List<Tile.eType> _moveableTypes;
+
 	public Entity(int zId, int zX, int zZ)
 	{
 		EntityManager.RegisterEntity(this);
@@ -18,36 +20,42 @@ public class Entity
 
 	}
 
-	public void MoveLeft(List<Tile.eType> zMoveableTypes)
+	public void MoveLeft()
 	{
-		MoveToPosition(PosX - 1, PosZ, zMoveableTypes);
+		MoveToPosition(PosX - 1, PosZ, _moveableTypes);
+		Debug.Log (PosX + ", " + PosZ);
 	}
 
-	public void MoveRight(List<Tile.eType> zMoveableTypes)
+	public void MoveRight()
 	{
-		MoveToPosition(PosX + 1, PosZ, zMoveableTypes);
+		MoveToPosition(PosX + 1, PosZ, _moveableTypes);
+		Debug.Log (PosX + ", " + PosZ);
 	}
 
-	public void MoveUp(List<Tile.eType> zMoveableTypes)
+	public void MoveUp()
 	{
-		MoveToPosition(PosX, PosZ + 1, zMoveableTypes);
+		MoveToPosition(PosX, PosZ + 1, _moveableTypes);
+		Debug.Log (PosX + ", " + PosZ);
 	}
 
-	public void MoveDown(List<Tile.eType> zMoveableTypes)
+	public void MoveDown()
 	{
-		MoveToPosition(PosX, PosZ - 1, zMoveableTypes);
+		MoveToPosition(PosX, PosZ - 1, _moveableTypes);
+		Debug.Log (PosX + ", " + PosZ);
 	}
 		
 	protected virtual void MoveToPosition(int zX, int zZ, List<Tile.eType> zMoveableTypes)
 	{
 		if (zX < 0 || zZ < 0 || zX >= TileManager.WIDTH || zZ >= TileManager.HEIGHT)
 		{
+			Debug.Log ("not moving because space is off the board");
 			//not moving because space is off the board
 			return;
 		}
 
 		if (EntityManager.GetEntityAtPosition(zX, zZ) != null)
 		{
+			Debug.Log ("not moving because space is empty");
 			//not moving because space is empty
 			return;
 		}
@@ -55,6 +63,7 @@ public class Entity
 		var tile = TileManager.GetTileAtPosition(zX, zZ);
 		if (tile == null || zMoveableTypes.Contains(tile.TileType))
 		{
+			Debug.Log ("not moving because tile is impassable");
 			//not moving because tile is impassable
 			return;
 		}

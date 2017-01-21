@@ -26,7 +26,9 @@ public class Game : MonoBehaviour
 
 		mEntityManager = new EntityManager();
 
-		var testSheep = new SheepEntity (0, 0, 0);
+		var testDog = new DogEntity (0, 0, 0);
+
+//		var testSheep = new SheepEntity (0, 3, 0);
 	}
 
 	private void Update()
