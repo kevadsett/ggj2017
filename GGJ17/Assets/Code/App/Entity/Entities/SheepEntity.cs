@@ -29,7 +29,9 @@ public class SheepEntity : Entity
 
 		if (moveTimer > gameData.SheepMoveDuration && ManhattanDistance (dog) <= 1)
 		{
-			TryToMove (PosX, PosZ);
+			int dX = PosX - dog.PosX, dZ = PosZ - dog.PosZ;
+
+			TryToMove (PosX + dX, PosZ + dZ);
 			moveTimer = 0.0f;
 		}
 
@@ -38,12 +40,13 @@ public class SheepEntity : Entity
 
 	private void TryToMove (int zX, int zZ)
 	{
-		//if (MoveToPosition (zX, zZ))
-		//{
-			// hurray!
-		//}
-		//
-		//else
+		bool shallObey = Random.Range (0, 100) < gameData.SheepObediencePercent;
+
+		if (shallObey && MoveToPosition (zX, zZ, _moveableTypes))
+		{
+			// hurray! we could move the way we wanted to!
+		}
+		else
 		{
 			int r = Random.Range (0, 4);
 
