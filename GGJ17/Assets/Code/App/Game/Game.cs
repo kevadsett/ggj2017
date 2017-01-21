@@ -36,7 +36,7 @@ public class Game : MonoBehaviour
 		new SheepEntity (0, 3, 1, testDog);
 		new SheepEntity (0, 4, 3, testDog);
 		
-		SetState(eState.Game);
+		SetState(eState.Menu);
 		mWaveManager = new WaveManager ();
 	}
 
