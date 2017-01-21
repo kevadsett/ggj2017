@@ -14,11 +14,11 @@ public class TileLibrary : MonoBehaviour
 		Instance = this;
 	}
 
-	public static GameObject GetTile(string zTileType)
+	public static GameObject GetTile(Tile.eType zTileType)
 	{
 		foreach (GameObject go in Instance.m_Tiles)
 		{
-			if (go.name == zTileType)
+			if (go.name == zTileType.ToString().ToLower())
 				return go;
 		}
 
