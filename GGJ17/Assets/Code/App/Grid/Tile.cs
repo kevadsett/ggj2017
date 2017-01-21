@@ -8,6 +8,7 @@ public class Tile
 		Grass,
 		Sand,
 		Water,
+		Obstacle,
 	}
 
 	public int ID { get; private set; }

@@ -5,8 +5,8 @@ public class TileManager
 {
 	private static TileManager Instance;
 
-	private int mWidth = 32;
-	private int mHeight = 19;
+	public static int WIDTH = 32;
+	public static int HEIGHT = 19;
 
 	private List<Tile> mTiles;
 	private List<TileRenderer> mRenderTiles;
@@ -20,29 +20,34 @@ public class TileManager
 		mRenderTiles = new List<TileRenderer>();
 		int id = 0;
 
-		for (int i = 0; i < mWidth; ++i)
-		{
-			for (int j = 0; j < mHeight; ++j)
-			{
-				var tile = new Tile(id, i, j, Tile.eType.Grass);
-				mTiles.Add(tile);
-				string type;
-				if (i == 0) {
-					type = "water";
-				} else if (i == 1) {
-					type = "sand";
-				} else {
-					type = "grass";
-				}
-				var tilePrefab = TileLibrary.GetTile (type);
 
-				var renderTileObject = GameObject.Instantiate(tilePrefab) as GameObject;
-				var renderTile = renderTileObject.AddComponent<TileRenderer>();
-				renderTile.ID = id;
-				mRenderTiles.Add(renderTile);
+		for (int i = 0; i < WIDTH; ++i)
+		{
+			for (int j = 0; j < HEIGHT; ++j)
+			{
+				CreateTile(id, i, j);
 				id++;
 			}
 		}
+	}
+
+	private void CreateTile(int zId, int zX, int zZ)
+	{
+		var tileType = Tile.eType.Grass;
+
+		if (zX == 0 || zX == WIDTH - 1 || zZ == 0)
+		{
+			tileType = Tile.eType.Sand;
+		}
+
+		var tile = new Tile(zId, zX, zZ, tileType);
+		mTiles.Add(tile);
+
+		var tilePrefab = TileLibrary.GetTile("grass");
+		var renderTileObject = GameObject.Instantiate(tilePrefab) as GameObject;
+		var renderTile = renderTileObject.AddComponent<TileRenderer>();
+		renderTile.ID = zId;
+		mRenderTiles.Add(renderTile);
 	}
 
 	public void RenderTiles()
