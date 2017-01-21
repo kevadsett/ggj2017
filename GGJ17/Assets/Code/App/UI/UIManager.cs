@@ -39,10 +39,10 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
-	public void GoToMenu()
+	public void StartGame()
 	{
 		//go back to menu
-		Game.ShowMainMenu();
+		Game.StartGame();
 	}
 
 	public void QuitGame()

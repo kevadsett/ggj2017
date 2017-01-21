@@ -82,6 +82,11 @@ public class Game : MonoBehaviour
 		Instance.SetState(eState.Game);
 	}
 
+	public static void StartGame()
+	{
+		Instance.SetupGame();
+	}
+
 	public static void ShowMainMenu()
 	{
 		Instance.SetState(eState.Menu);
