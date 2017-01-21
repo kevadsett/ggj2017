@@ -42,7 +42,8 @@ public class SheepEntity : Entity
 		//{
 			// hurray!
 		//}
-		else
+		//
+		//else
 		{
 			int r = Random.Range (0, 4);
 
