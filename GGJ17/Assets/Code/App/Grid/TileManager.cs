@@ -58,7 +58,7 @@ public class TileManager
 			}
 		}
 
-		Debug.LogError("Could nto find tile at position " + zX + " " + zZ);
+		Debug.LogError("Could not find tile at position " + zX + " " + zZ);
 		return null;
 	}
 }

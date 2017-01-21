@@ -5,8 +5,8 @@ public class TileRenderer : MonoBehaviour
 {
 	public int ID;
 
-	public void Render(int zX, int zZ)
+	public void Render(Tile zTile)
 	{
-		transform.position = new Vector3(zX, 0, zZ);
+		transform.position = new Vector3(zTile.PosX, 0, zTile.PosZ);
 	}
 }
