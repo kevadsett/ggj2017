@@ -75,6 +75,10 @@ public class TileManager
 
 	public static void ReplaceTile(int zX, int zZ, Tile.eType zType) {
 		Tile oldTile = GetTileAtPosition (zX, zZ);
+
+		if (oldTile == null)
+			return;
+
 		int ID = oldTile.ID;
 		int x = oldTile.PosX;
 		int z = oldTile.PosZ;
