@@ -7,7 +7,7 @@ public class Wave {
 	private int mWest = 0, mSouth = 1, mEast = 2;
 	private int mCardinalDirection;
 
-	private float startTime, lifeTime = 2;
+	private float startTime, lifeTime = 0.5f;
 	private bool incoming;
 	public bool done;
 
@@ -35,6 +35,15 @@ public class Wave {
 				grass = false;
 				int i = 0;
 				while (!grass) {
+					var affectedTile = TileManager.GetTileAtPosition (i, j);
+					if (affectedTile == null)
+						return;
+					
+					if (affectedTile.TileType == Tile.eType.House)
+					{
+						Game.GameEnd();
+					}
+
 					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
 						TileManager.ReplaceTile (i, j, Tile.eType.Water);
 						i++;
@@ -52,6 +61,15 @@ public class Wave {
 				grass = false;
 				int j = 0;
 				while (!grass) {
+					var affectedTile = TileManager.GetTileAtPosition (i, j);
+					if (affectedTile == null)
+						return;
+
+					if (affectedTile.TileType == Tile.eType.House)
+					{
+						Game.GameEnd();
+					}
+
 					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
 						TileManager.ReplaceTile (i, j, Tile.eType.Water);
 						j++;
@@ -69,6 +87,15 @@ public class Wave {
 				grass = false;
 				int i = TileManager.WIDTH-1;
 				while (!grass) {
+					var affectedTile = TileManager.GetTileAtPosition (i, j);
+					if (affectedTile == null)
+						return;
+					
+					if (affectedTile.TileType == Tile.eType.House)
+					{
+						Game.GameEnd();
+					}
+
 					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
 						TileManager.ReplaceTile (i, j, Tile.eType.Water);
 						i--;

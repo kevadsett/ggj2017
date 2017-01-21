@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaveManager {
 
 	float lastWave, waveTime;
-	float timeToNextWave = 5;
+	float timeToNextWave = 1;
 	bool wave = false;
 
 	private List<Wave> waves;

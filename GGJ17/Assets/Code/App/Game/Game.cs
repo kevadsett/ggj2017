@@ -9,6 +9,7 @@ public class Game : MonoBehaviour
 
 	public enum eState
 	{
+		Splash,
 		Menu,
 		Game,
 		GameEnd,
