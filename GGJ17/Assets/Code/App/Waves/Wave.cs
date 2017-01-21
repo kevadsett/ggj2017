@@ -7,7 +7,7 @@ public class Wave {
 	private int mWest = 0, mSouth = 1, mEast = 2;
 	private int mCardinalDirection;
 
-	private float startTime, lifeTime = 2;
+	private float startTime, lifeTime = 0.5f;
 	private bool incoming;
 	public bool done;
 
@@ -29,12 +29,47 @@ public class Wave {
 	}
 
 	void Income() {
-		if (mCardinalDirection == mSouth) {
+		if (mCardinalDirection == mWest) {
+			bool grass;
+			for (int j = 0; j < TileManager.HEIGHT; j++) {
+				grass = false;
+				int i = 0;
+				while (!grass) {
+					var affectedTile = TileManager.GetTileAtPosition (i, j);
+					if (affectedTile == null)
+						return;
+					
+					if (affectedTile.TileType == Tile.eType.House)
+					{
+						Game.GameEnd();
+					}
+
+					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
+						TileManager.ReplaceTile (i, j, Tile.eType.Water);
+						i++;
+					} else if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Grass) {
+						TileManager.ReplaceTile (i, j, Tile.eType.Water);
+						grass = true;
+					} else {
+						i++;
+					}
+				}
+			}
+		} else if (mCardinalDirection == mSouth) {
 			bool grass;
 			for (int i = 0; i < TileManager.WIDTH; i++) {
 				grass = false;
 				int j = 0;
 				while (!grass) {
+					var affectedTile = TileManager.GetTileAtPosition (i, j);
+					if (affectedTile == null)
+						return;
+
+					if (affectedTile.TileType == Tile.eType.House)
+					{
+						Game.GameEnd();
+					}
+
 					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
 						TileManager.ReplaceTile (i, j, Tile.eType.Water);
 						j++;
@@ -46,16 +81,57 @@ public class Wave {
 					}
 				}
 			}
+		} else if (mCardinalDirection == mEast) {
+			bool grass;
+			for (int j = 0; j < TileManager.HEIGHT; j++) {
+				grass = false;
+				int i = TileManager.WIDTH-1;
+				while (!grass) {
+					var affectedTile = TileManager.GetTileAtPosition (i, j);
+					if (affectedTile == null)
+						return;
+					
+					if (affectedTile.TileType == Tile.eType.House)
+					{
+						Game.GameEnd();
+					}
+
+					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
+						TileManager.ReplaceTile (i, j, Tile.eType.Water);
+						i--;
+					} else if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Grass) {
+						TileManager.ReplaceTile (i, j, Tile.eType.Water);
+						grass = true;
+					} else {
+						i--;
+					}
+				}
+			}
 		}
 	}
 
 	void Recede() {
-		if (mCardinalDirection == mSouth) {
-			bool grass;
+		if (mCardinalDirection == mWest) {
+			for (int i = 0; i < TileManager.WIDTH; i++) {
+				for (int j = TileManager.WIDTH-1; j>= 0; j--) {
+					if (TileManager.GetTileAtPosition (j, i).TileType == Tile.eType.Water) {
+						TileManager.ReplaceTile (j, i, Tile.eType.Sand);
+					} 
+				}
+			}
+		} else if (mCardinalDirection == mSouth) {
 			for (int i = TileManager.WIDTH-1; i >= 0; i--) {
 				for (int j = TileManager.HEIGHT-1; j>= 0; j--) {
 					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Water) {
 						TileManager.ReplaceTile (i, j, Tile.eType.Sand);
+					} 
+				}
+			}
+		} else if (mCardinalDirection == mEast) {
+			for (int i = 0; i < TileManager.HEIGHT; i++) {
+				for (int j = 0; i < TileManager.WIDTH; j++) {
+					if (TileManager.GetTileAtPosition (j, i).TileType == Tile.eType.Water) {
+						TileManager.ReplaceTile (j, i, Tile.eType.Sand);
 					} 
 				}
 			}

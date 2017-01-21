@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 882e39ab190ae4d008a128cea2bf1b06
+timeCreated: 1485021182
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: CoralSea
+  fontNames:
+  - CoralSea
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -20,7 +20,6 @@ public class TileManager
 		mTiles = new List<Tile>();
 		mRenderTiles = new List<TileRenderer>();
 	}
-
 	public void SetupTiles()
 	{
 		mTiles.Clear();
@@ -44,6 +43,13 @@ public class TileManager
 			}
 		}
 	}
+	
+	public void SetupGround(GameObject groundQuad)
+	{
+		GameObject ground = GameObject.Instantiate (groundQuad);
+		ground.transform.localScale = new Vector3(WIDTH, HEIGHT, 1);
+	}
+	
 
 	private void CreateTile(int zId, int zX, int zZ, Tile.eType zType)
 	{
@@ -54,7 +60,11 @@ public class TileManager
 			tileType = Tile.eType.Sand;
 		}*/
 
-	
+		if (zZ == TileManager.HEIGHT - 1 && zX > 4 && zX < TileManager.WIDTH - 5)
+		{
+			tileType = Tile.eType.House;
+		}
+
 		var tile = new Tile(zId, zX, zZ, tileType);
 		mTiles.Insert(zId,tile);
 
@@ -70,9 +80,11 @@ public class TileManager
 		int ID = oldTile.ID;
 		int x = oldTile.PosX;
 		int z = oldTile.PosZ;
+
 		Instance.mTiles.RemoveAt (ID);
 		GameObject.Destroy (Instance.mRenderTiles [ID].gameObject);
 		Instance.mRenderTiles.RemoveAt (ID);
+
 		Instance.CreateTile (ID, x, z, zType);
 	}
 

@@ -5,21 +5,26 @@ using UnityEngine;
 public class WaveManager {
 
 	float lastWave, waveTime;
-	float timeToNextWave = 5;
+	float timeToNextWave = 1;
 	bool wave = false;
 
 	private List<Wave> waves;
 
 	public WaveManager() {
-		lastWave = Time.time;
+		lastWave = Game.GameStartTime;
 		waves = new List<Wave> ();
 	}
 
+	public void Reset()
+	{
+		lastWave = Game.GameStartTime;
+	}
+
 	public void Update () { 
-		/*if (Time.time >= lastWave + timeToNextWave) {
+		if (Time.time >= lastWave + timeToNextWave) {
 			waves.Add (new Wave (1));
 			lastWave = Time.time;
-		}*/
+		}
 		List<Wave> doneWaves = new List<Wave> ();
 		foreach (Wave w in waves) {
 			w.Update ();
