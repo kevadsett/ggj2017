@@ -25,6 +25,7 @@ public class Game : MonoBehaviour
 		Instance = this;
 
 		mTileManager = new TileManager();
+		mTileManager.SetupTiles();
 		mTileManager.RenderTiles();
 
 		mEntityManager = new EntityManager();
@@ -62,6 +63,8 @@ public class Game : MonoBehaviour
 		//randomise sheep
 		//place dog
 		//reset tiles
+		Instance.mTileManager.SetupTiles();
+		Instance.mTileManager.RenderTiles();
 		Instance.SetState(eState.Game);
 	}
 
