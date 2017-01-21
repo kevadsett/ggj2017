@@ -25,18 +25,29 @@ public class TileManager
 		{
 			for (int j = 0; j < mHeight; ++j)
 			{
-				var tileType = Tile.eType.Grass;
-				var tile = new Tile(id, i, j, tileType);
-				mTiles.Add(tile);
-
-				var tilePrefab = TileLibrary.GetTile("grass");
-				var renderTileObject = GameObject.Instantiate(tilePrefab) as GameObject;
-				var renderTile = renderTileObject.AddComponent<TileRenderer>();
-				renderTile.ID = id;
-				mRenderTiles.Add(renderTile);
+				CreateTile(id, i, j);
 				id++;
 			}
 		}
+	}
+
+	private void CreateTile(int zId, int zX, int zZ)
+	{
+		var tileType = Tile.eType.Grass;
+
+		if (zX == 0 || zX == mWidth - 1 || zZ == 0)
+		{
+			tileType = Tile.eType.Sand;
+		}
+
+		var tile = new Tile(zId, zX, zZ, tileType);
+		mTiles.Add(tile);
+
+		var tilePrefab = TileLibrary.GetTile("grass");
+		var renderTileObject = GameObject.Instantiate(tilePrefab) as GameObject;
+		var renderTile = renderTileObject.AddComponent<TileRenderer>();
+		renderTile.ID = zId;
+		mRenderTiles.Add(renderTile);
 	}
 
 	public void RenderTiles()
