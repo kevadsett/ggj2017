@@ -10,6 +10,7 @@ public class Game : MonoBehaviour
 		Splash,
 		Menu,
 		Game,
+		GameEnd,
 		Waves,
 		Dialogue,
 	}
@@ -37,18 +38,11 @@ public class Game : MonoBehaviour
 	{
 		switch (mState)
 		{
-		case eState.Splash:
-
-			break;
-		case eState.Menu:
-			break;
 		case eState.Game:
-			//get input
-			//pass input to dog
+			//update entities
+			//update waves
 			break;
 		case eState.Waves:
-			break;
-		case eState.Dialogue:
 			break;
 		}
 
@@ -64,6 +58,10 @@ public class Game : MonoBehaviour
 
 	public static void SetupGame()
 	{
+		//do initial game setup here
+		//randomise sheep
+		//place dog
+		//reset tiles
 		Instance.SetState(eState.Game);
 	}
 
