@@ -44,6 +44,8 @@ public class Game : MonoBehaviour
 	{
 		mWaveManager.Update ();
 
+		EntityManager.UpdateEntities (mState);
+
 		switch (mState)
 		{
 		case eState.Game:
