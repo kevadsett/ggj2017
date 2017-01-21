@@ -3,14 +3,19 @@ using System.Collections.Generic;
 
 public class TileManager
 {
+	private static TileManager Instance;
+
 	private int mWidth = 32;
 	private int mHeight = 19;
 
 	private List<Tile> mTiles;
 	private List<TileRenderer> mRenderTiles;
 
+
 	public TileManager()
 	{
+		Instance = this;
+
 		mTiles = new List<Tile>();
 		mRenderTiles = new List<TileRenderer>();
 		int id = 0;
@@ -39,5 +44,21 @@ public class TileManager
 			var tile = mTiles[renderTile.ID];
 			renderTile.Render(tile.PosX, tile.PosZ);
 		}
+	}
+
+	public static Tile GetTileAtPosition(int zX, int zZ)
+	{
+		var tiles = Instance.mTiles;
+
+		foreach (Tile tile in tiles)
+		{
+			if (tile.PosX == zX && tile.PosZ == zZ)
+			{
+				return tile;
+			}
+		}
+
+		Debug.LogError("Could nto find tile at position " + zX + " " + zZ);
+		return null;
 	}
 }
