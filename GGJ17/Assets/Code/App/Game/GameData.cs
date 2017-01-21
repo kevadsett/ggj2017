@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,4 +6,5 @@ using UnityEngine;
 public class GameData : ScriptableObject {
 	public Vector2 GridDimensions;
 	public GameObject SheepPrefab;
+	public GameObject DogPrefab;
 }
