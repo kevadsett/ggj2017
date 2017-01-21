@@ -25,25 +25,21 @@ public class Entity
 	public void MoveLeft()
 	{
 		MoveToPosition(PosX - 1, PosZ, _moveableTypes);
-		Debug.Log (PosX + ", " + PosZ);
 	}
 
 	public void MoveRight()
 	{
 		MoveToPosition(PosX + 1, PosZ, _moveableTypes);
-		Debug.Log (PosX + ", " + PosZ);
 	}
 
 	public void MoveUp()
 	{
 		MoveToPosition(PosX, PosZ + 1, _moveableTypes);
-		Debug.Log (PosX + ", " + PosZ);
 	}
 
 	public void MoveDown()
 	{
 		MoveToPosition(PosX, PosZ - 1, _moveableTypes);
-		Debug.Log (PosX + ", " + PosZ);
 	}
 		
 	protected virtual void MoveToPosition(int zX, int zZ, List<Tile.eType> zMoveableTypes)
