@@ -5,8 +5,8 @@ public class TileManager
 {
 	private static TileManager Instance;
 
-	private int mWidth = 32;
-	private int mHeight = 19;
+	public static int WIDTH = 32;
+	public static int HEIGHT = 19;
 
 	private List<Tile> mTiles;
 	private List<TileRenderer> mRenderTiles;
@@ -21,9 +21,9 @@ public class TileManager
 		int id = 0;
 
 
-		for (int i = 0; i < mWidth; ++i)
+		for (int i = 0; i < WIDTH; ++i)
 		{
-			for (int j = 0; j < mHeight; ++j)
+			for (int j = 0; j < HEIGHT; ++j)
 			{
 				CreateTile(id, i, j);
 				id++;
@@ -35,7 +35,7 @@ public class TileManager
 	{
 		var tileType = Tile.eType.Grass;
 
-		if (zX == 0 || zX == mWidth - 1 || zZ == 0)
+		if (zX == 0 || zX == WIDTH - 1 || zZ == 0)
 		{
 			tileType = Tile.eType.Sand;
 		}
