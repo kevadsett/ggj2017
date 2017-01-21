@@ -7,4 +7,5 @@ public class GameData : ScriptableObject {
 	public Vector2 GridDimensions;
 	public GameObject SheepPrefab;
 	public GameObject DogPrefab;
+	public float SheepMoveDuration;
 }
