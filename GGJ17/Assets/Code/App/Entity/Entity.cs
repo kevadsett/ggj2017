@@ -48,22 +48,19 @@ public class Entity
 	{
 		if (zX < 0 || zZ < 0 || zX >= TileManager.WIDTH || zZ >= TileManager.HEIGHT)
 		{
-			Debug.Log ("not moving because space is off the board");
 			//not moving because space is off the board
 			return;
 		}
 
 		if (EntityManager.GetEntityAtPosition(zX, zZ) != null)
 		{
-			Debug.Log ("not moving because space is empty");
 			//not moving because space is empty
 			return;
 		}
 
 		var tile = TileManager.GetTileAtPosition(zX, zZ);
-		if (tile == null || zMoveableTypes.Contains(tile.TileType))
+		if (tile == null || !zMoveableTypes.Contains(tile.TileType))
 		{
-			Debug.Log ("not moving because tile is impassable");
 			//not moving because tile is impassable
 			return;
 		}
