@@ -20,11 +20,13 @@ public class TileManager
 		mRenderTiles = new List<TileRenderer>();
 		int id = 0;
 
+
 		for (int i = 0; i < mWidth; ++i)
 		{
 			for (int j = 0; j < mHeight; ++j)
 			{
-				var tile = new Tile(id, i, j);
+				var tileType = Tile.eType.Grass;
+				var tile = new Tile(id, i, j, tileType);
 				mTiles.Add(tile);
 
 				var tilePrefab = TileLibrary.GetTile("grass");
@@ -42,7 +44,7 @@ public class TileManager
 		foreach (TileRenderer renderTile in mRenderTiles)
 		{
 			var tile = mTiles[renderTile.ID];
-			renderTile.Render(tile.PosX, tile.PosZ);
+			renderTile.Render(tile);
 		}
 	}
 
