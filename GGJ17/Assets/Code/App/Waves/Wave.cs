@@ -44,6 +44,10 @@ public class Wave {
 		if (mCardinalDirection == mWest) {
 			TileManager.ReplaceTile (mDepth, 0, Tile.eType.Water);
 			for (int i = 1; i < TileManager.HEIGHT; i++) {
+				if (mGrass [i] == true) {
+					continue;
+				}
+
 				var tile = TileManager.GetTileAtPosition (mDepth, i);
 				if (CheckGameEnd(tile) || CheckSheep(tile))
 				{
@@ -56,9 +60,7 @@ public class Wave {
 					incoming--;
 					continue;
 				}
-				if (mGrass [i] == true) {
-					continue;
-				}
+
 				if (TileManager.GetTileAtPosition (mDepth, i).TileType == Tile.eType.Sand) {
 					TileManager.ReplaceTile (mDepth, i, Tile.eType.Water);
 				} else if (TileManager.GetTileAtPosition (mDepth, i).TileType == Tile.eType.Grass) {
@@ -72,6 +74,10 @@ public class Wave {
 			TileManager.ReplaceTile (0, mDepth, Tile.eType.Water);
 			TileManager.ReplaceTile (TileManager.WIDTH-1, mDepth, Tile.eType.Water);
 			for (int i = 1; i < TileManager.WIDTH-1; i++) {
+				if (mGrass [i] == true) {
+					continue;
+				}
+
 				var tile = TileManager.GetTileAtPosition (i, mDepth);
 				if (CheckGameEnd(tile) || CheckSheep(tile))
 				{
@@ -82,9 +88,6 @@ public class Wave {
 
 				if (TileManager.GetTileAtPosition (i,mDepth).TileType == Tile.eType.Water) {
 					incoming--;
-					continue;
-				}
-				if (mGrass [i] == true) {
 					continue;
 				}
 				if (TileManager.GetTileAtPosition (i, mDepth).TileType == Tile.eType.Sand) {
@@ -99,6 +102,10 @@ public class Wave {
 		} else if (mCardinalDirection == mEast) {
 			TileManager.ReplaceTile (TileManager.WIDTH-mDepth-1, 0, Tile.eType.Water);
 			for (int i = 0; i < TileManager.HEIGHT; i++) {
+				if (mGrass [i] == true) {
+					continue;
+				}
+
 				var tile = TileManager.GetTileAtPosition (TileManager.WIDTH-mDepth-1,i);
 				if (CheckGameEnd(tile) || CheckSheep(tile))
 				{
@@ -109,9 +116,6 @@ public class Wave {
 
 				if (TileManager.GetTileAtPosition (TileManager.WIDTH-mDepth-1,i).TileType == Tile.eType.Water) {
 					incoming--;
-					continue;
-				}
-				if (mGrass [i] == true) {
 					continue;
 				}
 				if (TileManager.GetTileAtPosition (TileManager.WIDTH-mDepth-1, i).TileType == Tile.eType.Sand) {
