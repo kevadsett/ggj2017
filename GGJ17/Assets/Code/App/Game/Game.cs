@@ -32,7 +32,7 @@ public class Game : MonoBehaviour
 
 		var testSheep = new SheepEntity (0, 0, 0);
 		
-		SetState(eState.Splash);
+		SetState(eState.Game);
 	}
 
 	private void Update()
