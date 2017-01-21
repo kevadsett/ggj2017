@@ -32,7 +32,6 @@ public class Game : MonoBehaviour
 		mTileManager = new TileManager();
 		mTileManager.SetupTiles();
 		mTileManager.RenderTiles();
-
 		new EntityManager();
 
 		var testDog = new DogEntity (0, 0, 0);

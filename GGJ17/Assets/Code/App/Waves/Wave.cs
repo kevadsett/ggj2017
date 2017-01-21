@@ -5,140 +5,146 @@ using UnityEngine;
 public class Wave {
 
 	private int mWest = 0, mSouth = 1, mEast = 2;
-	private int mCardinalDirection;
+	private int mCardinalDirection, mDepth, incoming;
+	private bool[] mGrass;
 
 	private float startTime, lifeTime;
-	private bool incoming;
 	public bool done;
 
 	public Wave (int zCardinalDirection) {
 		mCardinalDirection = zCardinalDirection;
+		if (zCardinalDirection == mWest || zCardinalDirection == mEast) {
+			mGrass = new bool[TileManager.HEIGHT];
+			incoming = TileManager.HEIGHT-1;
+		} else {
+			mGrass = new bool[TileManager.WIDTH];
+			incoming = TileManager.WIDTH-2;
+		}
 		startTime = Time.time;
-		incoming = true;
+
 		done = false;
 		lifeTime = GameDataBase.Instance.GetData(0).WaveSpeed * 0.5f;
+		mDepth = 0;
 	}
 
 	public void Update() {
-		if (incoming) {
+		if (mDepth == -1) {
+			done = true;
+			return;
+		}
+		if (incoming > 0) {
 			Income ();
-			incoming = false;
 		} else if (Time.time >= startTime + lifeTime){
 			Recede ();
-			done = true;
 		}
+
 	}
 
 	void Income() {
 		if (mCardinalDirection == mWest) {
-			bool grass;
-			for (int j = 0; j < TileManager.HEIGHT; j++) {
-				grass = false;
-				int i = 0;
-				while (!grass) {
-					var affectedTile = TileManager.GetTileAtPosition (i, j);
-					if (affectedTile == null)
-						return;
+			TileManager.ReplaceTile (mDepth, 0, Tile.eType.Water);
+			for (int i = 1; i < TileManager.HEIGHT; i++) {
+				var tile = TileManager.GetTileAtPosition (mDepth, i);
+				if (CheckGameEnd(tile) || CheckSheep(tile))
+				{
+					incoming--;
+					continue;
+				}
 
-					grass = CheckGameEnd(affectedTile);
-					grass = CheckSheep(affectedTile);
-
-					if (grass)
-						break;
-
-					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
-						TileManager.ReplaceTile (i, j, Tile.eType.Water);
-						i++;
-					} else if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Grass) {
-						TileManager.ReplaceTile (i, j, Tile.eType.Water);
-						grass = true;
-					} else {
-						i++;
-					}
+				if (TileManager.GetTileAtPosition (mDepth, i).TileType == Tile.eType.Water) {
+					incoming--;
+					continue;
+				}
+				if (mGrass [i] == true) {
+					continue;
+				}
+				if (TileManager.GetTileAtPosition (mDepth, i).TileType == Tile.eType.Sand) {
+					TileManager.ReplaceTile (mDepth, i, Tile.eType.Water);
+				} else if (TileManager.GetTileAtPosition (mDepth, i).TileType == Tile.eType.Grass) {
+					TileManager.ReplaceTile (mDepth, i, Tile.eType.Water);
+					mGrass [i] = true;
+					incoming--;
 				}
 			}
+			mDepth++;
 		} else if (mCardinalDirection == mSouth) {
-			bool grass;
-			for (int i = 0; i < TileManager.WIDTH; i++) {
-				grass = false;
-				int j = 0;
-				while (!grass) {
-					var affectedTile = TileManager.GetTileAtPosition (i, j);
-					if (affectedTile == null)
-						return;
+			TileManager.ReplaceTile (0, mDepth, Tile.eType.Water);
+			TileManager.ReplaceTile (TileManager.WIDTH-1, mDepth, Tile.eType.Water);
+			for (int i = 1; i < TileManager.WIDTH-1; i++) {
+				var tile = TileManager.GetTileAtPosition (i, mDepth);
+				if (CheckGameEnd(tile) || CheckSheep(tile))
+				{
+					incoming--;
+					continue;
+				}
 
-					grass = CheckGameEnd(affectedTile);
-					grass = CheckSheep(affectedTile);
-
-					if (grass)
-						break;
-
-					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
-						TileManager.ReplaceTile (i, j, Tile.eType.Water);
-						j++;
-					} else if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Grass) {
-						TileManager.ReplaceTile (i, j, Tile.eType.Water);
-						grass = true;
-					} else {
-						j++;
-					}
+				if (TileManager.GetTileAtPosition (i,mDepth).TileType == Tile.eType.Water) {
+					incoming--;
+					continue;
+				}
+				if (mGrass [i] == true) {
+					continue;
+				}
+				if (TileManager.GetTileAtPosition (i, mDepth).TileType == Tile.eType.Sand) {
+					TileManager.ReplaceTile (i, mDepth, Tile.eType.Water);
+				} else if (TileManager.GetTileAtPosition (i, mDepth).TileType == Tile.eType.Grass) {
+					TileManager.ReplaceTile (i, mDepth, Tile.eType.Water);
+					mGrass [i] = true;
+					incoming--;
 				}
 			}
+			mDepth++;
 		} else if (mCardinalDirection == mEast) {
-			bool grass;
-			for (int j = 0; j < TileManager.HEIGHT; j++) {
-				grass = false;
-				int i = TileManager.WIDTH-1;
-				while (!grass) {
-					var affectedTile = TileManager.GetTileAtPosition (i, j);
-					if (affectedTile == null)
-						return;
+			TileManager.ReplaceTile (TileManager.WIDTH-mDepth-1, 0, Tile.eType.Water);
+			for (int i = 0; i < TileManager.HEIGHT; i++) {
+				var tile = TileManager.GetTileAtPosition (TileManager.WIDTH-mDepth-1,i);
+				if (CheckGameEnd(tile) || CheckSheep(tile))
+				{
+					incoming--;
+					continue;
+				}
 
-					grass = CheckGameEnd(affectedTile);
-					grass = CheckSheep(affectedTile);
-
-					if (grass)
-						break;
-
-					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
-						TileManager.ReplaceTile (i, j, Tile.eType.Water);
-						i--;
-					} else if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Grass) {
-						TileManager.ReplaceTile (i, j, Tile.eType.Water);
-						grass = true;
-					} else {
-						i--;
-					}
+				if (TileManager.GetTileAtPosition (TileManager.WIDTH-mDepth-1,i).TileType == Tile.eType.Water) {
+					incoming--;
+					continue;
+				}
+				if (mGrass [i] == true) {
+					continue;
+				}
+				if (TileManager.GetTileAtPosition (TileManager.WIDTH-mDepth-1, i).TileType == Tile.eType.Sand) {
+					TileManager.ReplaceTile (TileManager.WIDTH-mDepth-1, i, Tile.eType.Water);
+				} else if (TileManager.GetTileAtPosition (TileManager.WIDTH-mDepth-1, i).TileType == Tile.eType.Grass) {
+					TileManager.ReplaceTile (TileManager.WIDTH-mDepth-1, i, Tile.eType.Water);
+					mGrass [i] = true;
+					incoming--;
 				}
 			}
+			mDepth++;
 		}
 	}
 
 	void Recede() {
 		if (mCardinalDirection == mWest) {
-			for (int i = 0; i < TileManager.WIDTH; i++) {
-				for (int j = TileManager.WIDTH-1; j>= 0; j--) {
-					if (TileManager.GetTileAtPosition (j, i).TileType == Tile.eType.Water) {
-						TileManager.ReplaceTile (j, i, Tile.eType.Sand);
-					} 
+			for (int j = 0; j < TileManager.HEIGHT; j++) {
+				if (TileManager.GetTileAtPosition (mDepth, j).TileType == Tile.eType.Water) {
+					TileManager.ReplaceTile (mDepth, j, Tile.eType.Sand);
 				}
 			}
+			mDepth--;
 		} else if (mCardinalDirection == mSouth) {
-			for (int i = TileManager.WIDTH-1; i >= 0; i--) {
-				for (int j = TileManager.HEIGHT-1; j>= 0; j--) {
-					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Water) {
-						TileManager.ReplaceTile (i, j, Tile.eType.Sand);
-					} 
+			for (int j = 0; j < TileManager.WIDTH; j++) {
+				if (TileManager.GetTileAtPosition (j,mDepth).TileType == Tile.eType.Water) {
+					TileManager.ReplaceTile (j,mDepth, Tile.eType.Sand);
 				}
 			}
+			mDepth--;
 		} else if (mCardinalDirection == mEast) {
-			for (int i = 0; i < TileManager.HEIGHT; i++) {
-				for (int j = 0; i < TileManager.WIDTH; j++) {
-					if (TileManager.GetTileAtPosition (j, i).TileType == Tile.eType.Water) {
-						TileManager.ReplaceTile (j, i, Tile.eType.Sand);
-					} 
+			for (int j = 0; j < TileManager.HEIGHT; j++) {
+				if (TileManager.GetTileAtPosition (TileManager.WIDTH-mDepth-1, j).TileType == Tile.eType.Water) {
+					TileManager.ReplaceTile (TileManager.WIDTH-mDepth-1, j, Tile.eType.Sand);
 				}
 			}
+			mDepth--;
 		}
 	}
 

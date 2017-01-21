@@ -23,7 +23,7 @@ public class WaveManager {
 
 	public void Update () { 
 		if (Time.time >= lastWave + timeToNextWave) {
-			waves.Add (new Wave (1));
+			waves.Add (new Wave (0));
 			lastWave = Time.time;
 		}
 		List<Wave> doneWaves = new List<Wave> ();
