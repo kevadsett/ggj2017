@@ -49,6 +49,9 @@ public class Wave {
 				}
 
 				var tile = TileManager.GetTileAtPosition (mDepth, i);
+				if (tile == null)
+					continue;
+				
 				if (CheckGameEnd(tile) || CheckSheep(tile))
 				{
 					mGrass [i] = true;
@@ -79,6 +82,9 @@ public class Wave {
 				}
 
 				var tile = TileManager.GetTileAtPosition (i, mDepth);
+				if (tile == null)
+					continue;
+				
 				if (CheckGameEnd(tile) || CheckSheep(tile))
 				{
 					mGrass [i] = true;
@@ -107,6 +113,9 @@ public class Wave {
 				}
 
 				var tile = TileManager.GetTileAtPosition (TileManager.WIDTH-mDepth-1,i);
+				if (tile == null)
+					continue;
+
 				if (CheckGameEnd(tile) || CheckSheep(tile))
 				{
 					mGrass [i] = true;
