@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Entity
 {
+	public int Id { get; private set; }
 	public int PosX { get; private set; }
 	public int PosZ { get; private set; }
 
+
+	public Entity(int zId, int zX, int zZ)
+	{
+		EntityManager.RegisterEntity(this);
+	}
 
 	public void MoveLeft()
 	{
@@ -35,5 +41,10 @@ public class Entity
 
 		PosX = zX;
 		PosZ = zZ;
+	}
+
+	private void Destroy()
+	{
+		EntityManager.DeregisterEntity(this);
 	}
 }
