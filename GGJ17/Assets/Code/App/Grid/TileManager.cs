@@ -13,14 +13,25 @@ public class TileManager
 
 	private GameData mGameData;
 
+
 	public TileManager()
 	{
 		Instance = this;
 
 		mTiles = new List<Tile>();
 		mRenderTiles = new List<TileRenderer>();
-		int id = 0;
+	}
 
+	public void SetupTiles()
+	{
+		mTiles.Clear();
+		foreach (TileRenderer tile in mRenderTiles)
+		{
+			GameObject.Destroy(tile.gameObject);
+		}
+		mRenderTiles.Clear();
+
+		int id = 0;
 		mGameData = GameDataBase.Instance.GetData ();
 		WIDTH = (int)mGameData.GridDimensions.x;
 		HEIGHT = (int)mGameData.GridDimensions.y;
