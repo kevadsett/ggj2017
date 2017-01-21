@@ -10,6 +10,8 @@ public class DogView : MonoBehaviour {
 
 	private Vector3 _lastPos;
 	private Vector3 _newPos;
+	private Quaternion _lastRot;
+	private Quaternion _newRot;
 	private float _timer;
 
 	public void InitAtPoint (Vector3 point)
@@ -23,6 +25,9 @@ public class DogView : MonoBehaviour {
 		_lastPos = transform.localPosition;
 		_newPos = point;
 		_timer = 0.0f;
+
+		_lastRot = transform.localRotation;
+		_newRot = Quaternion.LookRotation( Vector3.Cross (_lastPos - _newPos, Vector3.up));
 	}
 
 	void Update () {
@@ -34,5 +39,7 @@ public class DogView : MonoBehaviour {
 
 		transform.localPosition = Vector3.Lerp (_lastPos, _newPos, v);
 		transform.localPosition += new Vector3 (0.0f, bounce, 0.0f);
+
+		transform.localRotation = Quaternion.Slerp (_lastRot, _newRot, v);
 	}
 }
