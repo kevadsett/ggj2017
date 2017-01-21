@@ -39,7 +39,12 @@ public class TileManager
 		{
 			for (int j = 0; j < HEIGHT; ++j)
 			{
-				CreateTile(id, i, j, Tile.eType.Grass);
+				var tileType = Tile.eType.Grass;
+				if (i == 0 || i == WIDTH - 1 || j == 0)
+				{
+					tileType = Tile.eType.Sand;
+				}
+				CreateTile(id, i, j, tileType);
 				id++;
 			}
 		}
@@ -48,11 +53,6 @@ public class TileManager
 	private void CreateTile(int zId, int zX, int zZ, Tile.eType zType)
 	{
 		var tileType = zType; //Tile.eType.Grass;
-
-		/*if (zX == 0 || zX == WIDTH - 1 || zZ == 0)
-		{
-			tileType = Tile.eType.Sand;
-		}*/
 
 		var tile = new Tile(zId, zX, zZ, tileType);
 		mTiles.Insert(zId,tile);
