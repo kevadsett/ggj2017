@@ -6,18 +6,16 @@ public class SheepEntity : Entity
 	private RollingCube viewCube;
 	private DogEntity dog;
 	private float moveTimer;
+	private GameData gameData;
 
 	public SheepEntity (int zId, int zX, int zZ, DogEntity zDog) : base (zId, zX, zZ)
 	{
-		var gameData = GameDataBase.Instance.GetData (0);
-		var prefab = gameData.SheepPrefab;
+		gameData = GameDataBase.Instance.GetData (0);
+		dog = zDog;
 
-		var obj = Object.Instantiate (prefab);
-
+		var obj = Object.Instantiate (gameData.SheepPrefab);
 		viewCube = obj.GetComponent <RollingCube>();
 		viewCube.InitAtPoint (new Vector3 (zX, 0.0f, zZ));
-
-		dog = zDog;
 
 		_moveableTypes = new List<Tile.eType> ()
 		{
@@ -29,14 +27,38 @@ public class SheepEntity : Entity
 	{
 		moveTimer += Time.deltaTime;
 
-		if (moveTimer > 1.0f)
+		if (moveTimer > gameData.SheepMoveDuration && ManhattanDistance (dog) <= 1)
 		{
-			MoveLeft ();
-			viewCube.MoveToPoint (new Vector3 (PosX, 0.0f, PosZ));
-			moveTimer -= 1.0f;
+			TryToMove (PosX, PosZ);
+			moveTimer = 0.0f;
 		}
 
 		base.Update (zGameState);
+	}
+
+	private void TryToMove (int zX, int zZ)
+	{
+		//if (MoveToPosition (zX, zZ))
+		//{
+			// hurray!
+		//}
+		else
+		{
+			int r = Random.Range (0, 4);
+
+			List<System.Func<bool>> possibleMoves = null;
+			if (r == 0) possibleMoves = new List<System.Func<bool>> { MoveUp, MoveDown, MoveLeft, MoveRight };
+			if (r == 1) possibleMoves = new List<System.Func<bool>> { MoveDown, MoveUp, MoveRight, MoveLeft };
+			if (r == 2) possibleMoves = new List<System.Func<bool>> { MoveLeft, MoveRight, MoveUp, MoveDown };
+			if (r == 3) possibleMoves = new List<System.Func<bool>> { MoveRight, MoveLeft, MoveDown, MoveUp };
+
+			for (int i = 0; i < possibleMoves.Count; i++)
+			{
+				if (possibleMoves [i]() == true) break;
+			}
+		}
+
+		viewCube.MoveToPoint (new Vector3 (PosX, 0.0f, PosZ));
 	}
 
 	protected override void Destroy ()
