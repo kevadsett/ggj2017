@@ -43,7 +43,7 @@ public class TileManager
 		var tile = new Tile(zId, zX, zZ, tileType);
 		mTiles.Add(tile);
 
-		var tilePrefab = TileLibrary.GetTile("grass");
+		var tilePrefab = TileLibrary.GetTile(tileType);
 		var renderTileObject = GameObject.Instantiate(tilePrefab) as GameObject;
 		var renderTile = renderTileObject.AddComponent<TileRenderer>();
 		renderTile.ID = zId;
