@@ -16,7 +16,6 @@ public class Game : MonoBehaviour
 	}
 
 	private TileManager mTileManager;
-	private EntityManager mEntityManager;
 	private eState mState;
 
 
@@ -28,9 +27,12 @@ public class Game : MonoBehaviour
 		mTileManager.SetupTiles();
 		mTileManager.RenderTiles();
 
-		mEntityManager = new EntityManager();
+		new EntityManager();
 
-		var testSheep = new SheepEntity (0, 0, 0);
+		var testDog = new DogEntity (0, 0, 0);
+		new SheepEntity (0, 2, 1, testDog);
+		new SheepEntity (0, 3, 1, testDog);
+		new SheepEntity (0, 4, 3, testDog);
 		
 		SetState(eState.Game);
 	}

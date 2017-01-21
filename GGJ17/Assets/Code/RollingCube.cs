@@ -20,6 +20,13 @@ public class RollingCube : MonoBehaviour
 	private Quaternion newRot;
 	private float timer;
 
+	public void InitAtPoint (Vector3 point)
+	{
+		lastPos = newPos = point;
+		lastRot = newRot = Quaternion.identity;
+		timer = 0.0f;
+	}
+
 	public void MoveToPoint (Vector3 point)
 	{
 		lastPos = posXform.localPosition;

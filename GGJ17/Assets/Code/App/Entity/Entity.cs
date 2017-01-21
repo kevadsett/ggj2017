@@ -12,6 +12,8 @@ public class Entity
 
 	public Entity(int zId, int zX, int zZ)
 	{
+		PosX = zX;
+		PosZ = zZ;
 		EntityManager.RegisterEntity(this);
 	}
 
