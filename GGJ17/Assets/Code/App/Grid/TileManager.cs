@@ -20,7 +20,6 @@ public class TileManager
 		mTiles = new List<Tile>();
 		mRenderTiles = new List<TileRenderer>();
 	}
-
 	public void SetupTiles()
 	{
 		mTiles.Clear();
@@ -44,6 +43,13 @@ public class TileManager
 			}
 		}
 	}
+	
+	public void SetupGround(GameObject groundQuad)
+	{
+		GameObject ground = GameObject.Instantiate (groundQuad);
+		ground.transform.localScale = new Vector3(WIDTH, HEIGHT, 1);
+	}
+	
 
 	private void CreateTile(int zId, int zX, int zZ, Tile.eType zType)
 	{

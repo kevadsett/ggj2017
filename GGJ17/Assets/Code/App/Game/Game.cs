@@ -15,6 +15,8 @@ public class Game : MonoBehaviour
 		Dialogue,
 	}
 
+	public GameObject GroundPrefab;
+
 	private TileManager mTileManager;
 	private eState mState;
 	private WaveManager mWaveManager;
@@ -36,7 +38,7 @@ public class Game : MonoBehaviour
 		new SheepEntity (0, 3, 1, testDog);
 		new SheepEntity (0, 4, 3, testDog);
 		
-		SetState(eState.Game);
+		SetState(eState.Menu);
 		mWaveManager = new WaveManager ();
 	}
 
@@ -71,7 +73,9 @@ public class Game : MonoBehaviour
 		//randomise sheep
 		//place dog
 		//reset tiles
+		Debug.Log("Setting up");
 		Instance.mTileManager.SetupTiles();
+		Instance.mTileManager.SetupGround(Instance.GroundPrefab);
 		Instance.mTileManager.RenderTiles();
 		Instance.SetState(eState.Game);
 	}
