@@ -8,10 +8,14 @@ public class Entity
 	public int PosX { get; private set; }
 	public int PosZ { get; private set; }
 
-
 	public Entity(int zId, int zX, int zZ)
 	{
 		EntityManager.RegisterEntity(this);
+	}
+
+	public virtual void Update (Game.eState zGameState)
+	{
+
 	}
 
 	public void MoveLeft(List<Tile.eType> zMoveableTypes)
@@ -33,8 +37,8 @@ public class Entity
 	{
 		MoveToPosition(PosX, PosZ - 1, zMoveableTypes);
 	}
-
-	private void MoveToPosition(int zX, int zZ, List<Tile.eType> zMoveableTypes)
+		
+	protected virtual void MoveToPosition(int zX, int zZ, List<Tile.eType> zMoveableTypes)
 	{
 		if (zX < 0 || zZ < 0 || zX >= TileManager.WIDTH || zZ >= TileManager.HEIGHT)
 		{

@@ -42,5 +42,7 @@ public class Game : MonoBehaviour
 		case eState.Dialogue:
 			break;
 		}
+
+		EntityManager.UpdateEntities (mState);
 	}
 }

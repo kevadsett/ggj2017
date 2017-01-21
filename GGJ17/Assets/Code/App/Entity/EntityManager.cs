@@ -8,7 +8,6 @@ public class EntityManager
 
 	private List<Entity> mEntities;
 
-
 	public EntityManager()
 	{
 		Instance = this;
@@ -18,8 +17,10 @@ public class EntityManager
 
 	public static Entity GetEntityAtPosition(int zX, int zZ)
 	{
-		foreach (Entity entity in Instance.mEntities)
+		for (int i = 0; i < Instance.mEntities.Count; i++)
 		{
+			var entity = Instance.mEntities[i];
+
 			if (entity.PosX == zX && entity.PosZ == zZ)
 			{
 				return entity;
@@ -37,5 +38,13 @@ public class EntityManager
 	public static void DeregisterEntity(Entity zEntity)
 	{
 		Instance.mEntities.Remove(zEntity);
+	}
+
+	public static void UpdateEntities(Game.eState zGameState)
+	{
+		for (int i = 0; i < Instance.mEntities.Count; i++)
+		{
+			Instance.mEntities[i].Update(zGameState);
+		}
 	}
 }
