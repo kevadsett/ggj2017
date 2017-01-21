@@ -11,4 +11,5 @@ public class GameData : ScriptableObject {
 	public float FreeMoveThreshold;
 	public float SheepMoveDuration;
 	public int SheepObediencePercent;
+	public float WaveSpeed;
 }

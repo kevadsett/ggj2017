@@ -7,7 +7,7 @@ public class Wave {
 	private int mWest = 0, mSouth = 1, mEast = 2;
 	private int mCardinalDirection;
 
-	private float startTime, lifeTime = 0.5f;
+	private float startTime, lifeTime;
 	private bool incoming;
 	public bool done;
 
@@ -16,6 +16,7 @@ public class Wave {
 		startTime = Time.time;
 		incoming = true;
 		done = false;
+		lifeTime = GameDataBase.Instance.GetData(0).WaveSpeed * 0.5f;
 	}
 
 	public void Update() {
@@ -38,11 +39,12 @@ public class Wave {
 					var affectedTile = TileManager.GetTileAtPosition (i, j);
 					if (affectedTile == null)
 						return;
-					
-					if (affectedTile.TileType == Tile.eType.House)
-					{
-						Game.GameEnd();
-					}
+
+					grass = CheckGameEnd(affectedTile);
+					grass = CheckSheep(affectedTile);
+
+					if (grass)
+						break;
 
 					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
 						TileManager.ReplaceTile (i, j, Tile.eType.Water);
@@ -65,10 +67,11 @@ public class Wave {
 					if (affectedTile == null)
 						return;
 
-					if (affectedTile.TileType == Tile.eType.House)
-					{
-						Game.GameEnd();
-					}
+					grass = CheckGameEnd(affectedTile);
+					grass = CheckSheep(affectedTile);
+
+					if (grass)
+						break;
 
 					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
 						TileManager.ReplaceTile (i, j, Tile.eType.Water);
@@ -90,11 +93,12 @@ public class Wave {
 					var affectedTile = TileManager.GetTileAtPosition (i, j);
 					if (affectedTile == null)
 						return;
-					
-					if (affectedTile.TileType == Tile.eType.House)
-					{
-						Game.GameEnd();
-					}
+
+					grass = CheckGameEnd(affectedTile);
+					grass = CheckSheep(affectedTile);
+
+					if (grass)
+						break;
 
 					if (TileManager.GetTileAtPosition (i, j).TileType == Tile.eType.Sand) {
 						TileManager.ReplaceTile (i, j, Tile.eType.Water);
@@ -136,5 +140,28 @@ public class Wave {
 				}
 			}
 		}
+	}
+
+	private bool CheckGameEnd(Tile zTile)
+	{
+		if (zTile.TileType == Tile.eType.House)
+		{
+			Game.GameEnd();
+			return true;
+		}
+
+		return false;
+	}
+
+	private bool CheckSheep(Tile zTile)
+	{
+		var entity = EntityManager.GetEntityAtPosition(zTile.PosX, zTile.PosZ);
+
+		if (entity != null && entity is SheepEntity)
+		{
+			return true;
+		}
+
+		return false;
 	}
 }

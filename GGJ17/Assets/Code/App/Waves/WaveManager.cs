@@ -5,12 +5,13 @@ using UnityEngine;
 public class WaveManager {
 
 	float lastWave, waveTime;
-	float timeToNextWave = 1;
+	float timeToNextWave = 0;
 	bool wave = false;
 
 	private List<Wave> waves;
 
 	public WaveManager() {
+		timeToNextWave = GameDataBase.Instance.GetData(0).WaveSpeed;
 		lastWave = Game.GameStartTime;
 		waves = new List<Wave> ();
 	}
