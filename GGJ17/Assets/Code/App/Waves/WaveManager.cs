@@ -11,8 +11,13 @@ public class WaveManager {
 	private List<Wave> waves;
 
 	public WaveManager() {
-		lastWave = Time.time;
+		lastWave = Game.GameStartTime;
 		waves = new List<Wave> ();
+	}
+
+	public void Reset()
+	{
+		lastWave = Game.GameStartTime;
 	}
 
 	public void Update () { 

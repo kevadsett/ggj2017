@@ -3,11 +3,12 @@ using System.Collections;
 
 public class Game : MonoBehaviour
 {
+	public static float GameStartTime = 0;
+
 	public static Game Instance;
 
 	public enum eState
 	{
-		Splash,
 		Menu,
 		Game,
 		GameEnd,
@@ -42,17 +43,11 @@ public class Game : MonoBehaviour
 
 	private void Update()
 	{
-		mWaveManager.Update ();
-
-		EntityManager.UpdateEntities (mState);
-
 		switch (mState)
 		{
 		case eState.Game:
-			//update entities
-			//update waves
-			break;
-		case eState.Waves:
+			mWaveManager.Update();
+			EntityManager.UpdateEntities(mState);
 			break;
 		}
 		mTileManager.RenderTiles ();
@@ -71,6 +66,8 @@ public class Game : MonoBehaviour
 		//randomise sheep
 		//place dog
 		//reset tiles
+		GameStartTime = Time.time;
+		Instance.mWaveManager.Reset();
 		Instance.mTileManager.SetupTiles();
 		Instance.mTileManager.RenderTiles();
 		Instance.SetState(eState.Game);
@@ -79,5 +76,10 @@ public class Game : MonoBehaviour
 	public static void ShowMainMenu()
 	{
 		Instance.SetState(eState.Menu);
+	}
+
+	public static void GameEnd()
+	{
+		Instance.SetState(eState.GameEnd);
 	}
 }
