@@ -54,7 +54,6 @@ public class TileManager
 			tileType = Tile.eType.Sand;
 		}*/
 
-	
 		var tile = new Tile(zId, zX, zZ, tileType);
 		mTiles.Insert(zId,tile);
 
@@ -70,9 +69,11 @@ public class TileManager
 		int ID = oldTile.ID;
 		int x = oldTile.PosX;
 		int z = oldTile.PosZ;
+
 		Instance.mTiles.RemoveAt (ID);
 		GameObject.Destroy (Instance.mRenderTiles [ID].gameObject);
 		Instance.mRenderTiles.RemoveAt (ID);
+
 		Instance.CreateTile (ID, x, z, zType);
 	}
 

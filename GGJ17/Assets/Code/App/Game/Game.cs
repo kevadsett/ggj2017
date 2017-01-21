@@ -55,6 +55,7 @@ public class Game : MonoBehaviour
 		case eState.Waves:
 			break;
 		}
+		mTileManager.RenderTiles ();
 	}
 
 	private void SetState(eState zNewState)

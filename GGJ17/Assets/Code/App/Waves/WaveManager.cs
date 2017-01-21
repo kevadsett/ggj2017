@@ -16,10 +16,10 @@ public class WaveManager {
 	}
 
 	public void Update () { 
-		/*if (Time.time >= lastWave + timeToNextWave) {
+		if (Time.time >= lastWave + timeToNextWave) {
 			waves.Add (new Wave (1));
 			lastWave = Time.time;
-		}*/
+		}
 		List<Wave> doneWaves = new List<Wave> ();
 		foreach (Wave w in waves) {
 			w.Update ();
