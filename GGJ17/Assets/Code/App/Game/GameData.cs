@@ -8,4 +8,5 @@ public class GameData : ScriptableObject {
 	public GameObject SheepPrefab;
 	public GameObject DogPrefab;
 	public float SheepMoveDuration;
+	public int SheepObediencePercent;
 }
