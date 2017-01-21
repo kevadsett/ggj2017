@@ -5,12 +5,13 @@ public class TileManager
 {
 	private static TileManager Instance;
 
-	public static int WIDTH = 32;
-	public static int HEIGHT = 19;
+	public static int WIDTH;
+	public static int HEIGHT;
 
 	private List<Tile> mTiles;
 	private List<TileRenderer> mRenderTiles;
 
+	private GameData mGameData;
 
 	public TileManager()
 	{
@@ -20,6 +21,9 @@ public class TileManager
 		mRenderTiles = new List<TileRenderer>();
 		int id = 0;
 
+		mGameData = GameDataBase.Instance.GetData ();
+		WIDTH = (int)mGameData.GridDimensions.x;
+		HEIGHT = (int)mGameData.GridDimensions.y;
 
 		for (int i = 0; i < WIDTH; ++i)
 		{
