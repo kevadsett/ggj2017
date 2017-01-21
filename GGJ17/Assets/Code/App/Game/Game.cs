@@ -25,6 +25,8 @@ public class Game : MonoBehaviour
 		mTileManager.RenderTiles();
 
 		mEntityManager = new EntityManager();
+
+		var testSheep = new SheepEntity (0, 0, 0);
 	}
 
 	private void Update()

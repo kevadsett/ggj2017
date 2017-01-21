@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UnityEngine;
 
 public class SheepEntity : Entity
 {
@@ -6,8 +6,18 @@ public class SheepEntity : Entity
 
 	public SheepEntity (int zId, int zX, int zZ) : base (zId, zX, zZ)
 	{
-		// create viewCube and position
+		var gameData = GameDataBase.Instance.GetData (0);
+		var prefab = gameData.SheepPrefab;
+
+		var obj = Object.Instantiate (prefab, new Vector3 (zX, 0.0f, zZ), Quaternion.identity);
+
+		viewCube = obj.GetComponent <RollingCube>();
 	}
 
+	protected override void Destroy ()
+	{
+		Object.Destroy (viewCube);
 
+		base.Destroy ();
+	}
 }

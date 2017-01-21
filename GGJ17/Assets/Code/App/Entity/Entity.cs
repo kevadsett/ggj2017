@@ -63,7 +63,7 @@ public class Entity
 		PosZ = zZ;
 	}
 
-	private void Destroy()
+	protected virtual void Destroy()
 	{
 		EntityManager.DeregisterEntity(this);
 	}
