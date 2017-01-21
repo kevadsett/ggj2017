@@ -5,11 +5,13 @@ using UnityEngine;
 public class DogEntity : Entity {
 	private GameObject _gameObject;
 	private DogView _view;
+	private GameData _gameData;
+	private float _moveTimer;
 
 	public DogEntity (int zId, int zX, int zZ) : base (zId, zX, zZ)
 	{
-		var gameData = GameDataBase.Instance.GetData ();
-		var prefab = gameData.DogPrefab;
+		_gameData = GameDataBase.Instance.GetData ();
+		var prefab = _gameData.DogPrefab;
 
 		_gameObject = GameObject.Instantiate (prefab);
 
@@ -25,31 +27,46 @@ public class DogEntity : Entity {
 
 	public override void Update (Game.eState zGameState)
 	{
-		bool shouldAnimate = false;
+		_moveTimer += Time.deltaTime;
+
+		if (_moveTimer > _gameData.DogMoveDuration * _gameData.FreeMoveThreshold)
+		{
+			if (TryToMove (PosX, PosZ))
+			{
+				_moveTimer = 0.0f;
+			}
+		}
+	}
+
+	private bool TryToMove (float x, float z)
+	{
+		bool shouldMove = false;
 		if (Input.GetKeyDown (KeyCode.W))
 		{
 			MoveUp ();
-			shouldAnimate = true;
+			shouldMove = true;
 		}
-		if (Input.GetKeyDown (KeyCode.S))
+		else if (Input.GetKeyDown (KeyCode.S))
 		{
 			MoveDown ();
-			shouldAnimate = true;
+			shouldMove = true;
 		}
-		if (Input.GetKeyDown (KeyCode.A))
+		else if (Input.GetKeyDown (KeyCode.A))
 		{
 			MoveLeft ();
-			shouldAnimate = true;
+			shouldMove = true;
 		}
-		if (Input.GetKeyDown (KeyCode.D))
+		else if (Input.GetKeyDown (KeyCode.D))
 		{
 			MoveRight ();
-			shouldAnimate = true;
+			shouldMove = true;
 		}
-		if (shouldAnimate)
+
+		if (shouldMove)
 		{
 			_view.MoveToPoint (new Vector3(PosX, 0, PosZ));
 		}
+		return shouldMove;
 	}
 
 }

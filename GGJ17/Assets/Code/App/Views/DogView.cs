@@ -6,7 +6,6 @@ public class DogView : MonoBehaviour {
 	public AnimationCurve SpeedCurve;
 	public AnimationCurve HeightCurve;
 
-	public float CharacterMoveSpeed;
 	public float CharacterBounceHeight;
 
 	private Vector3 _lastPos;
@@ -27,7 +26,7 @@ public class DogView : MonoBehaviour {
 	}
 
 	void Update () {
-		_timer += Time.deltaTime * CharacterMoveSpeed;
+		_timer += Time.deltaTime / GameDataBase.Instance.GetData().DogMoveDuration;
 		_timer = Mathf.Clamp01 (_timer);
 
 		float v = SpeedCurve.Evaluate (_timer);
