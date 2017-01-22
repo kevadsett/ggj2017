@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,13 +13,16 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private Letterbox[] m_Letterboxes;
 
+	[SerializeField]
+	private Text m_Timer;
+
 
 	private void Awake()
 	{
 		Instance = this;
 	}
 
-	public static void UpdateUI(Game.eState zGameState)
+	public static void UpdateUI(Game.eState zGameState, float zTimer)
 	{
 		foreach (UIElement element in Instance.m_UIElements)
 		{
@@ -28,6 +32,7 @@ public class UIManager : MonoBehaviour
 		if (zGameState == Game.eState.Game)
 		{
 			Instance.UpdateLetterBoxes();
+			Instance.UpdateTimer(zTimer);
 		}
 	}
 
@@ -37,6 +42,12 @@ public class UIManager : MonoBehaviour
 		{
 			letterBox.StartAnimation();
 		}
+	}
+
+	private void UpdateTimer(float zTimer)
+	{
+		var prettyTimer = Mathf.Clamp(zTimer, 0f, float.MaxValue);
+		m_Timer.text = "Wave incoming in " + prettyTimer.ToString("0.00");
 	}
 
 	public void StartGame()
