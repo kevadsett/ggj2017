@@ -58,6 +58,9 @@ public class Game : MonoBehaviour
 			}
 			UIManager.UpdateUI(Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 			break;
+		case eState.GameEnd:
+			UIManager.UpdateUI(Instance.mState, 0);
+			break;
 		}
 	}
 
