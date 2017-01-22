@@ -10,6 +10,7 @@ public class RollingCube : MonoBehaviour
 	public AnimationCurve heightCurve;
 	public float bounceHeight;
 	public Transform posXform;
+	public Transform hopXform;
 	public Transform rotXform;
 
 	private Vector3 lastPos;
@@ -62,7 +63,7 @@ public class RollingCube : MonoBehaviour
 
 		posXform.localPosition = Vector3.Lerp (lastPos, newPos, v);
 		rotXform.localRotation = Quaternion.Slerp (lastRot, newRot, v);
-		posXform.localPosition += new Vector3 (0.0f, bounce, 0.0f);
+		hopXform.localPosition = new Vector3 (0.0f, bounce, 0.0f);
 	}
 
 	[Conditional ("USE_DEBUG_INPUT")]

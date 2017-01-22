@@ -19,6 +19,7 @@ public class Game : MonoBehaviour
 
 	private TileManager mTileManager;
 	private eState mState;
+	private float mRoundStartedTime;
 
 	private void Start()
 	{
@@ -47,6 +48,14 @@ public class Game : MonoBehaviour
 			break;
 		case eState.Game:
 			EntityManager.UpdateEntities(mState);
+
+			var timePerRound = GameDataBase.Instance.GetData(0).RoundTime;
+			if ((Time.time - mRoundStartedTime) >= timePerRound)
+			{
+				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
+				ToiletWave.TriggerWave();
+			}
+			UIManager.UpdateUI(Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 			break;
 		}
 	}
@@ -55,7 +64,7 @@ public class Game : MonoBehaviour
 	{
 		Instance.mState = zNewState;
 
-		UIManager.UpdateUI(Instance.mState);
+		UIManager.UpdateUI(Instance.mState, (Time.time - mRoundStartedTime));
 	}
 
 	private void SetupGame()
@@ -67,6 +76,7 @@ public class Game : MonoBehaviour
 		GameStartTime = Time.time;
 		Instance.mTileManager.SetupTiles(3);
 		Instance.SetState(eState.Game);
+		mRoundStartedTime = Time.time;
 	}
 
 	public static void StartGame()
