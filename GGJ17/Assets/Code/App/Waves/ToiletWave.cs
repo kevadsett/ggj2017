@@ -47,6 +47,8 @@ public class ToiletWave : MonoBehaviour
 		Instance.mTimeStartedWave = Time.time;
 		Instance.mWaveState = eState.Incoming;
 		Instance.mWaveResolved = false;
+
+		AudioPlayer.PlaySound ("Flush", Vector3.zero);
 	}
 
 	public static bool IsDone()
