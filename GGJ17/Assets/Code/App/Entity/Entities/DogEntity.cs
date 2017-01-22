@@ -40,22 +40,22 @@ public class DogEntity : Entity {
 	private bool TryToMove (float x, float z)
 	{
 		bool shouldMove = false;
-		if (Input.GetKeyDown (KeyCode.W))
+		if (Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown (KeyCode.UpArrow))
 		{
 			MoveUp ();
 			shouldMove = true;
 		}
-		else if (Input.GetKeyDown (KeyCode.S))
+		else if (Input.GetKeyDown (KeyCode.S) || Input.GetKeyDown (KeyCode.DownArrow))
 		{
 			MoveDown ();
 			shouldMove = true;
 		}
-		else if (Input.GetKeyDown (KeyCode.A))
+		else if (Input.GetKeyDown (KeyCode.A) || Input.GetKeyDown (KeyCode.LeftArrow))
 		{
 			MoveLeft ();
 			shouldMove = true;
 		}
-		else if (Input.GetKeyDown (KeyCode.D))
+		else if (Input.GetKeyDown (KeyCode.D) || Input.GetKeyDown (KeyCode.RightArrow))
 		{
 			MoveRight ();
 			shouldMove = true;
@@ -68,7 +68,7 @@ public class DogEntity : Entity {
 		return shouldMove;
 	}
 
-	public override void Destroy ()
+	public override void Destroy (bool destroyImmediately)
 	{
 		Object.Destroy (_view.gameObject);
 		base.Destroy ();

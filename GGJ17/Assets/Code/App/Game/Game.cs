@@ -19,6 +19,7 @@ public class Game : MonoBehaviour
 		GameEnd,
 		Waves,
 		Dialogue,
+		LevelSucceeded
 	}
 
 	private Score mScoreKeeper;
@@ -85,6 +86,12 @@ public class Game : MonoBehaviour
 		case eState.GameEnd:
 			UIManager.UpdateUI(Instance.mState, 0);
 			break;
+		case eState.LevelSucceeded:
+			if (Input.GetKeyUp (KeyCode.Space))
+			{
+				StartNextLevel ();
+			}
+			break;
 		}
 	}
 
@@ -105,7 +112,10 @@ public class Game : MonoBehaviour
 		GameStartTime = Time.time;
 		for (int i = 0; i < mSheepList.Count; i++)
 		{
-			mSheepList [i].Destroy ();
+			if (mSheepList != null)
+			{
+				mSheepList [i].Destroy (true);
+			}
 		}
 		mSheepList.Clear ();
 		for (int i = 0; i < mCurrentLevel.SheepCount; i++)
@@ -117,10 +127,10 @@ public class Game : MonoBehaviour
 		mRoundStartedTime = Time.time;
 	}
 
-	private void StartNextLevel()
+	public static void StartNextLevel()
 	{
-		mCurrentLevel = LevelDataBase.Instance.GetNextLevel ();
-		SetupGame ();
+		Instance.mCurrentLevel = LevelDataBase.Instance.GetNextLevel ();
+		Instance.SetupGame ();
 	}
 
 	public static void StartGame()
@@ -149,9 +159,14 @@ public class Game : MonoBehaviour
 	public static void FinishWave()
 	{
 		int sheepCount = EntityManager.GetSheepCount ();
-		if (Instance.mCurrentWaveIndex < Instance.mCurrentLevel.WaveCount || sheepCount == 0)
+	
+		if (sheepCount == 0)
 		{
-			Instance.StartNextLevel ();
+			Instance.SetState (eState.GameEnd);
+		}
+		else if (Instance.mCurrentWaveIndex >= Instance.mCurrentLevel.WaveCount)
+		{
+			Instance.SetState (eState.LevelSucceeded);
 		}
 
 		var sound = "Success" + sheepCount;
