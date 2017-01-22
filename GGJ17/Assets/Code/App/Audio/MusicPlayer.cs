@@ -30,8 +30,6 @@ public class MusicPlayer : MonoBehaviour
 
 	public static void Play (int id)
 	{
-		Debug.Log ("PLAY " + id);
-
 		instance.musics[id].volume = instance.volumes[id] = 1.0f;
 		instance.shouldFades[id] = false;
 
@@ -43,8 +41,6 @@ public class MusicPlayer : MonoBehaviour
 
 	public static void FadeOut (int id)
 	{
-		Debug.Log ("FADE " + id);
-
 		instance.shouldFades[id] = true;
 	}
 }
