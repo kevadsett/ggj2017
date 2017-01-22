@@ -67,9 +67,9 @@ public class SheepEntity : Entity
 		viewCube.MoveToPoint (new Vector3 (PosX, 0.0f, PosZ));
 	}
 
-	protected override void Destroy ()
+	public override void Destroy ()
 	{
-		Object.Destroy (viewCube);
+		Object.Destroy (viewCube.gameObject);
 
 		base.Destroy ();
 	}
