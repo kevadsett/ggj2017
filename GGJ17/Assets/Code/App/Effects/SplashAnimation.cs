@@ -22,7 +22,7 @@ public class SplashAnimation : MonoBehaviour
 	private bool mAppearing;
 
 
-	private void Start()
+	private void Awake()
 	{
 		Instance = this;
 		mTimeStartedAnimation = -m_AnimationTime;
