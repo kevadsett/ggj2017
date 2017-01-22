@@ -19,4 +19,9 @@ public class Score
 	{
 		CurrentScore += zIncrement;
 	}
+
+	public void ResetScore()
+	{
+		CurrentScore = 0;
+	}
 }

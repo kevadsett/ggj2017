@@ -153,6 +153,7 @@ public class Game : MonoBehaviour
 		Instance.mTileManager.SetupTiles(mCurrentLevel.SheepCount);
 		Instance.SetState(eState.Game);
 		mRoundStartedTime = Time.time;
+		Score.Instance.ResetScore();
 
 		MusicPlayer.FadeOut (1);
 		MusicPlayer.Play (0);
