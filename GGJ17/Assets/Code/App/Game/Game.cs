@@ -50,6 +50,7 @@ public class Game : MonoBehaviour
 		mCurrentLevel = LevelDataBase.Instance.GetLevel (0);
 		
 		SetState(eState.Menu);
+		SplashAnimation.Appear();
 	}
 
 	private void Update()
@@ -59,6 +60,7 @@ public class Game : MonoBehaviour
 		case eState.Menu:
 			if (Input.GetKeyUp(KeyCode.Space))
 			{
+				SplashAnimation.Hide();
 				SetupGame();
 			}
 			break;
