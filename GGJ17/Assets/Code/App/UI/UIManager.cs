@@ -16,6 +16,12 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private Text m_Timer;
 
+	[SerializeField]
+	private Image m_EulogyBackground;
+
+	[SerializeField]
+	private GameObject m_EulogyRoot;
+
 
 	private void Awake()
 	{
@@ -33,6 +39,14 @@ public class UIManager : MonoBehaviour
 		{
 			Instance.UpdateLetterBoxes();
 			Instance.UpdateTimer(zTimer);
+		}
+
+		if (zGameState == Game.eState.GameEnd)
+		{
+			var bgColor = Instance.m_EulogyBackground.color;
+			bgColor.a = Mathf.Lerp(bgColor.a, 1f, Time.deltaTime);
+			Instance.m_EulogyBackground.color = bgColor;
+			Instance.m_EulogyRoot.transform.Translate(Vector2.up * 60f * Time.deltaTime, Space.World);
 		}
 	}
 
