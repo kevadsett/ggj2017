@@ -7,7 +7,7 @@ public class ResetEulogy : MonoBehaviour
 	private static ResetEulogy Instance;
 
 
-	private void Start()
+	private void Awake()
 	{
 		Instance = this;
 	}
