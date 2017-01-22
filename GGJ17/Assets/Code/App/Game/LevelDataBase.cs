@@ -21,7 +21,7 @@ public class LevelDataBase : MonoBehaviour {
 	public LevelData GetNextLevel()
 	{
 		_levelIndex++;
-		if (_levelIndex >= Levels.Count)
+		if (_levelIndex >= 1)
 		{
 			_levelIndex = 0;
 			Game.MultiplyInterval ();

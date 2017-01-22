@@ -73,7 +73,7 @@ public class Game : MonoBehaviour
 		case eState.Game:			
 			EntityManager.UpdateEntities (mState);
 
-			var timePerRound = mCurrentLevel.WaveIntervalTime;
+			var timePerRound = mCurrentLevel.WaveIntervalTime * _intervalMultiplier;
 			var elapsedTime = (Time.time - mRoundStartedTime);
 			var hornWarningTime = 2f;
 
