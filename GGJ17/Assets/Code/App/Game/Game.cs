@@ -22,6 +22,8 @@ public class Game : MonoBehaviour
 	private eState mState;
 	private float mRoundStartedTime;
 
+	private LevelData mCurrentLevel;
+
 	private void Start()
 	{
 		Instance = this;
@@ -31,9 +33,12 @@ public class Game : MonoBehaviour
 		new EntityManager();
 
 		var testDog = new DogEntity (0, 0, 0);
-		new SheepEntity (0, 2, 1, testDog);
-		new SheepEntity (0, 3, 1, testDog);
-		new SheepEntity (0, 4, 3, testDog);
+
+		mCurrentLevel = LevelDataBase.Instance.GetLevel (0);
+		for (int i = 0; i < mCurrentLevel.SheepCount; i++)
+		{
+			new SheepEntity (0, Random.Range(1, 16), Random.Range(1, 9), testDog);
+		}
 		
 		SetState(eState.Menu);
 	}
@@ -86,7 +91,7 @@ public class Game : MonoBehaviour
 		//place dog
 		//reset tiles
 		GameStartTime = Time.time;
-		Instance.mTileManager.SetupTiles(3);
+		Instance.mTileManager.SetupTiles(mCurrentLevel.SheepCount);
 		Instance.SetState(eState.Game);
 		mRoundStartedTime = Time.time;
 	}
