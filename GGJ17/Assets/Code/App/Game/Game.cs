@@ -28,6 +28,7 @@ public class Game : MonoBehaviour
 	private TileManager mTileManager;
 	private eState mState;
 	private float mRoundStartedTime;
+	private float mNextWaveTimer;
 
 	private LevelData mCurrentLevel;
 
@@ -105,7 +106,8 @@ public class Game : MonoBehaviour
 			UIManager.UpdateUI(Instance.mState, LevelDataBase.Instance._levelIndex, 0);
 			break;
 		case eState.LevelSucceeded:
-			if (Input.GetKeyUp (KeyCode.Space))
+			mNextWaveTimer += Time.deltaTime;
+			if (mNextWaveTimer >= 1.5f)
 			{
 				StartNextLevel ();
 			}
@@ -195,6 +197,7 @@ public class Game : MonoBehaviour
 		else if (Instance.mCurrentWaveIndex >= Instance.mCurrentLevel.WaveCount)
 		{
 			Instance.SetState (eState.LevelSucceeded);
+			Instance.mNextWaveTimer = 0.0f;
 		}
 
 		var sound = "Success" + sheepCount;
