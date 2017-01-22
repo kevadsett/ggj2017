@@ -162,6 +162,7 @@ public class Game : MonoBehaviour
 	
 		if (sheepCount == 0)
 		{
+			ResetEulogy.ResetPosition();
 			Instance.SetState (eState.GameEnd);
 		}
 		else if (Instance.mCurrentWaveIndex >= Instance.mCurrentLevel.WaveCount)
