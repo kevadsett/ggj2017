@@ -135,6 +135,7 @@ public class Game : MonoBehaviour
 		//randomise sheep
 		//place dog
 		//reset tiles
+		_intervalMultiplier = 1;
 		mCurrentWaveIndex = 0;
 		GameStartTime = Time.time;
 		for (int i = 0; i < mSheepList.Count; i++)
