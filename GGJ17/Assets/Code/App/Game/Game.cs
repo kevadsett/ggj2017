@@ -56,11 +56,16 @@ public class Game : MonoBehaviour
 			EntityManager.UpdateEntities(mState);
 
 			var timePerRound = GameDataBase.Instance.GetData(0).RoundTime;
-			if ((Time.time - mRoundStartedTime) >= timePerRound)
+			var timeElapsed = (Time.time - mRoundStartedTime);
+			if (timeElapsed >= timePerRound - 1.5f)
+			{
+				Horn.TriggerAnimation();
+			}
+
+			if (timeElapsed >= timePerRound)
 			{
 				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
 				ToiletWave.TriggerWave();
-				Horn.TriggerAnimation();
 			}
 			UIManager.UpdateUI(Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 
