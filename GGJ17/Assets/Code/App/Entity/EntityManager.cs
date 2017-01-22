@@ -30,6 +30,21 @@ public class EntityManager
 		return null;
 	}
 
+	public static int GetSheepCount()
+	{
+		int count = 0;
+
+		foreach (Entity entity in Instance.mEntities)
+		{
+			if (entity is SheepEntity)
+			{
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	public static void RegisterEntity(Entity zEntity)
 	{
 		Instance.mEntities.Add(zEntity);

@@ -17,6 +17,7 @@ public class Game : MonoBehaviour
 		Dialogue,
 	}
 
+	private Score mScoreKeeper;
 	private TileManager mTileManager;
 	private eState mState;
 	private float mRoundStartedTime;
@@ -26,6 +27,7 @@ public class Game : MonoBehaviour
 		Instance = this;
 
 		mTileManager = new TileManager(MoundObject);
+		mScoreKeeper = new Score();
 		new EntityManager();
 
 		var testDog = new DogEntity (0, 0, 0);
@@ -54,8 +56,15 @@ public class Game : MonoBehaviour
 			{
 				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
 				ToiletWave.TriggerWave();
+
+				mScoreKeeper.AddScore(EntityManager.GetSheepCount());
 			}
 			UIManager.UpdateUI(Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
+
+			if (Input.GetKeyUp(KeyCode.T))
+			{
+				GameEnd();
+			}
 			break;
 		case eState.GameEnd:
 			UIManager.UpdateUI(Instance.mState, 0);

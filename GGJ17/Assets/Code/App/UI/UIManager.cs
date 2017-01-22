@@ -22,6 +22,9 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private GameObject m_EulogyRoot;
 
+	[SerializeField]
+	private Text m_SheepScore;
+
 
 	private void Awake()
 	{
@@ -39,6 +42,7 @@ public class UIManager : MonoBehaviour
 		{
 			Instance.UpdateLetterBoxes();
 			Instance.UpdateTimer(zTimer);
+			Instance.UpdateScore();
 		}
 
 		if (zGameState == Game.eState.GameEnd)
@@ -62,6 +66,11 @@ public class UIManager : MonoBehaviour
 	{
 		var prettyTimer = Mathf.Clamp(zTimer, 0f, float.MaxValue);
 		m_Timer.text = "Wave incoming in " + prettyTimer.ToString("0.00");
+	}
+
+	private void UpdateScore()
+	{
+		m_SheepScore.text = "Sheep Points: " + Score.Instance.CurrentScore;
 	}
 
 	public void StartGame()
