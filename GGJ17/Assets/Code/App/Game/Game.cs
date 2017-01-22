@@ -44,7 +44,7 @@ public class Game : MonoBehaviour
 		mScoreKeeper = new Score();
 		new EntityManager();
 
-		mDog = new DogEntity (0, 0, 0);
+		mDog = new DogEntity (0, 8, 7);
 		mSheepList = new List<SheepEntity> ();
 
 		mCurrentLevel = LevelDataBase.Instance.GetLevel (0);
@@ -67,7 +67,17 @@ public class Game : MonoBehaviour
 
 			var timePerRound = mCurrentLevel.WaveIntervalTime;
 			var elapsedTime = (Time.time - mRoundStartedTime);
-			if (elapsedTime >= timePerRound - 2f)
+			var hornWarningTime = 2f;
+
+			if (Input.GetKeyUp(KeyCode.Space))
+			{
+				if (elapsedTime < timePerRound - 2f)
+				{
+					mRoundStartedTime = Time.time - timePerRound + hornWarningTime;
+				}
+			}
+
+			if (elapsedTime >= timePerRound - hornWarningTime)
 			{
 				Horn.TriggerAnimation ();
 			}
@@ -85,12 +95,16 @@ public class Game : MonoBehaviour
 			else
 			{
 				UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
+
 			}
 
-			if (Input.GetKeyUp(KeyCode.T))
+			if (elapsedTime >= timePerRound)
 			{
-				GameEnd();
+				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
+				ToiletWave.TriggerWave();
+				mCurrentWaveIndex++;
 			}
+			UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 			break;
 		case eState.GameEnd:
 			UIManager.UpdateUI(Instance.mState, 0);
