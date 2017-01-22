@@ -12,6 +12,5 @@ public class GameData : ScriptableObject {
 	public float SheepMoveDuration;
 	public int SheepObediencePercent;
 	public float WaveSpeed;
-	public float RoundTime;
 	public float TimeToAnimateWave;
 }

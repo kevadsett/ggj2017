@@ -56,7 +56,7 @@ public class Game : MonoBehaviour
 		case eState.Game:
 			EntityManager.UpdateEntities(mState);
 
-			var timePerRound = GameDataBase.Instance.GetData(0).RoundTime;
+			var timePerRound = mCurrentLevel.WaveIntervalTime;
 			if ((Time.time - mRoundStartedTime) >= timePerRound)
 			{
 				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
