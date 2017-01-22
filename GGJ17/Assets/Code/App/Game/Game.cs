@@ -150,6 +150,9 @@ public class Game : MonoBehaviour
 		Instance.mTileManager.SetupTiles(mCurrentLevel.SheepCount);
 		Instance.SetState(eState.Game);
 		mRoundStartedTime = Time.time;
+
+		MusicPlayer.FadeOut (1);
+		MusicPlayer.Play (0);
 	}
 
 	public static void StartNextLevel()
@@ -166,6 +169,8 @@ public class Game : MonoBehaviour
 	public static void ShowMainMenu()
 	{
 		Instance.SetState(eState.Menu);
+
+		MusicPlayer.FadeOut (0);
 	}
 
 	public static void GameEnd()
@@ -179,6 +184,10 @@ public class Game : MonoBehaviour
 		int sheepCount = EntityManager.GetSheepCount ();
 		Instance.mScoreKeeper.AddScore(sheepCount);
 
+		if (sheepCount == 0)
+		{
+			MusicPlayer.FadeOut (0);
+		}
 	}
 
 	public static void FinishWave()
