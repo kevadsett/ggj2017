@@ -5,6 +5,8 @@ using UnityEngine;
 public class DogView : MonoBehaviour {
 	public AnimationCurve SpeedCurve;
 	public AnimationCurve HeightCurve;
+	public Transform hopTransform;
+	public Transform shadowTransform;
 
 	public float CharacterBounceHeight;
 
@@ -38,7 +40,8 @@ public class DogView : MonoBehaviour {
 		float bounce = CharacterBounceHeight * HeightCurve.Evaluate (v);
 
 		transform.localPosition = Vector3.Lerp (_lastPos, _newPos, v);
-		transform.localPosition += new Vector3 (0.0f, bounce, 0.0f);
+		hopTransform.localPosition = new Vector3 (0.0f, bounce, 0.0f);
+		shadowTransform.localScale = Vector3.one * (1.0f - bounce);
 
 		transform.localRotation = Quaternion.Slerp (_lastRot, _newRot, v);
 	}

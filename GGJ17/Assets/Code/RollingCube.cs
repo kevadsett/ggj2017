@@ -12,6 +12,7 @@ public class RollingCube : MonoBehaviour
 	public Transform posXform;
 	public Transform hopXform;
 	public Transform rotXform;
+	public Transform shadowXform;
 
 	private Vector3 lastPos;
 	private Vector3 newPos;
@@ -64,6 +65,7 @@ public class RollingCube : MonoBehaviour
 		posXform.localPosition = Vector3.Lerp (lastPos, newPos, v);
 		rotXform.localRotation = Quaternion.Slerp (lastRot, newRot, v);
 		hopXform.localPosition = new Vector3 (0.0f, bounce, 0.0f);
+		shadowXform.localScale = Vector3.one * (1.0f - bounce * 0.75f);
 	}
 
 	[Conditional ("USE_DEBUG_INPUT")]
