@@ -6,10 +6,30 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Sheep_Back_Left
+    100004: Sheep_Back_Right
+    100006: Sheep_Front_Left
+    100008: Sheep_Front_Right
     400000: //RootNode
+    400002: Sheep_Back_Left
+    400004: Sheep_Back_Right
+    400006: Sheep_Front_Left
+    400008: Sheep_Front_Right
     2300000: //RootNode
+    2300002: Sheep_Back_Left
+    2300004: Sheep_Back_Right
+    2300006: Sheep_Front_Left
+    2300008: Sheep_Front_Right
     3300000: //RootNode
+    3300002: Sheep_Back_Left
+    3300004: Sheep_Back_Right
+    3300006: Sheep_Front_Left
+    3300008: Sheep_Front_Right
     4300000: Sheep
+    4300002: Sheep_Back_Left
+    4300004: Sheep_Back_Right
+    4300006: Sheep_Front_Right
+    4300008: Sheep_Front_Left
     9500000: //RootNode
   materials:
     importMaterials: 0

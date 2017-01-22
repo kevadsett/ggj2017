@@ -63,6 +63,7 @@ public class SheepEntity : Entity
 			}
 		}
 
+		AudioPlayer.PlaySound ("SheepRoll", new Vector3 (PosX, 0.0f, PosZ));
 		viewCube.MoveToPoint (new Vector3 (PosX, 0.0f, PosZ));
 	}
 
