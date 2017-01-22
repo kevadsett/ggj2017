@@ -166,6 +166,9 @@ public class Game : MonoBehaviour
 
 	public static void StartGame()
 	{
+
+		LevelDataBase.Instance.Reset ();
+		Instance.mCurrentLevel = LevelDataBase.Instance.GetLevel (0);
 		Instance.SetupGame();
 		Score.Instance.ResetScore();
 	}

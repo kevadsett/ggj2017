@@ -28,4 +28,9 @@ public class LevelDataBase : MonoBehaviour {
 		}
 		return Levels[_levelIndex];
 	}
+
+	public void Reset()
+	{
+		_levelIndex = 0;
+	}
 }
