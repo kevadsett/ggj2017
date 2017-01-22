@@ -34,7 +34,7 @@ public class AudioPlayer : MonoBehaviour
 		}
 		else
 		{
-			Debug.LogError ("OH NO THERE IS NO SOUND TO PLAY!");
+			Debug.LogError ("OH NO THERE IS NO SOUND TO PLAY! " + soundName);
 		}
 	}
 }
