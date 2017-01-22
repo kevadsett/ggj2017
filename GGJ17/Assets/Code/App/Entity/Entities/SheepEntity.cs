@@ -74,12 +74,21 @@ public class SheepEntity : Entity
 		return (tile.TileType == Tile.eType.Mound);
 	}
 
-	public override void Destroy ()
+	public override void Destroy (bool destroyImmediately = false)
 	{
-		//Object.Destroy (viewCube.gameObject);
-		viewCube.transform.SetParent(ToiletWave.Instance.transform);
-		viewCube.drowned = true;
-		ToiletWave.Instance.CarrySheep(viewCube);
+		if (destroyImmediately)
+		{
+			if (viewCube != null)
+			{
+				Object.Destroy (viewCube.gameObject);
+			}
+		}
+		else
+		{
+			viewCube.transform.SetParent(ToiletWave.Instance.transform);
+			viewCube.drowned = true;
+			ToiletWave.Instance.CarrySheep(viewCube);
+		}
 
 		base.Destroy ();
 	}

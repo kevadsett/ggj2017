@@ -84,7 +84,7 @@ public class Entity
 		return false;
 	}
 
-	public virtual void Destroy()
+	public virtual void Destroy(bool destroyImmediately = false)
 	{
 		EntityManager.DeregisterEntity(this);
 	}
