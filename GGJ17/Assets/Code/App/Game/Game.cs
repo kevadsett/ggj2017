@@ -60,6 +60,7 @@ public class Game : MonoBehaviour
 			{
 				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
 				ToiletWave.TriggerWave();
+				Horn.TriggerAnimation();
 			}
 			UIManager.UpdateUI(Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 
