@@ -108,7 +108,13 @@ public class UIManager : MonoBehaviour
 	private void UpdateTimer(float zTimer)
 	{
 		var prettyTimer = Mathf.Clamp(zTimer, 0f, float.MaxValue);
-		m_Timer.text = "" + Mathf.CeilToInt (prettyTimer);
+		string text = "" + Mathf.CeilToInt (prettyTimer);
+
+		if (m_Timer.text != text)
+		{
+			m_Timer.text = text;
+			Timer.Tick ();
+		}
 	}
 
 	public static void ShowHideTimer(bool show)
