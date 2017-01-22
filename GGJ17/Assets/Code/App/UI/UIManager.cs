@@ -124,7 +124,13 @@ public class UIManager : MonoBehaviour
 
 	private void UpdateScore()
 	{
-		m_SheepScore.text = "" + Score.Instance.CurrentScore;
+		string text = "" + Score.Instance.CurrentScore;
+
+		if (m_SheepScore.text != text)
+		{
+			m_SheepScore.text = text;
+			ScoreTick.Tick ();
+		}
 	}
 
 	public void StartGame()
