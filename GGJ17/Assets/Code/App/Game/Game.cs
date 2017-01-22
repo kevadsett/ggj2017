@@ -60,8 +60,7 @@ public class Game : MonoBehaviour
 			}
 			break;
 		case eState.Game:
-			if (mCurrentWaveIndex < mCurrentLevel.WaveCount)
-			{
+			
 				EntityManager.UpdateEntities (mState);
 
 				var timePerRound = mCurrentLevel.WaveIntervalTime;
@@ -73,18 +72,6 @@ public class Game : MonoBehaviour
 					mCurrentWaveIndex++;
 				}
 				UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
-			}
-			else
-			{
-				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
-				ToiletWave.TriggerWave();
-
-				mScoreKeeper.AddScore(EntityManager.GetSheepCount());
-				StartNextLevel ();
-				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
-				ToiletWave.TriggerWave();
-				Horn.TriggerAnimation();
-			}
 
 			if (Input.GetKeyUp(KeyCode.T))
 			{
@@ -150,6 +137,17 @@ public class Game : MonoBehaviour
 	public static void ResolveWave()
 	{
 		EntityManager.DrownSheep();
-		Instance.mScoreKeeper.AddScore(EntityManager.GetSheepCount());
+		int sheepCount = EntityManager.GetSheepCount ();
+		Instance.mScoreKeeper.AddScore(sheepCount);
+
+	}
+
+	public static void FinishWave()
+	{
+		int sheepCount = EntityManager.GetSheepCount ();
+		if (Instance.mCurrentWaveIndex < Instance.mCurrentLevel.WaveCount || sheepCount == 0)
+		{
+			Instance.StartNextLevel ();
+		}
 	}
 }
