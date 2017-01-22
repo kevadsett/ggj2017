@@ -64,6 +64,7 @@ public class EntityManager
 
 		foreach (SheepEntity sheep in drownedSheep)
 		{
+			AudioPlayer.PlaySound("SheepDeath", Vector3.zero);
 			sheep.Destroy();
 		}
 	}
