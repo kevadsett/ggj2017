@@ -18,11 +18,11 @@ public class Eulogy : MonoBehaviour
 	private Text m_FateField;
 
 
-	public void SetData(EulogyData zData)
+	public void SetData(SheepData zData)
 	{
-		m_NameField.text = zData.Name;
-		m_DateField.text = zData.Date;
-		m_SummaryField.text = zData.Summary;
-		m_FateField.text = "Buried At Sea";
+		m_NameField.text = zData.name;
+		m_DateField.text = zData.Dates;
+		m_SummaryField.text = zData.EulogyText;
+		m_FateField.text = zData.FinalText;
 	}
 }

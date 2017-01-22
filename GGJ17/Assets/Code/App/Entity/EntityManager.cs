@@ -45,9 +45,10 @@ public class EntityManager
 		return count;
 	}
 
-	public static void DrownSheep()
+	public static List<SheepData> DrownSheep()
 	{
 		List<Entity> drownedSheep = new List<Entity>();
+		List<SheepData> sheepThatDrowned = new List<SheepData> ();
 
 		foreach (Entity entity in Instance.mEntities)
 		{
@@ -58,6 +59,7 @@ public class EntityManager
 				if (!sheep.IsSafe())
 				{
 					drownedSheep.Add(sheep);
+					sheepThatDrowned.Add (sheep.Data);
 				}
 			}
 		}
@@ -66,6 +68,7 @@ public class EntityManager
 		{
 			sheep.Destroy();
 		}
+		return sheepThatDrowned;
 	}
 
 	public static void RegisterEntity(Entity zEntity)

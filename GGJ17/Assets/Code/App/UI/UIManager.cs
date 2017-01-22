@@ -28,6 +28,11 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private Image m_KeyboardInstruction;
 
+	[SerializeField]
+	private Transform m_EulogyScroller;
+
+	[SerializeField]
+	private GameObject m_EulogyPrefab;
 
 	private bool m_isHidingKeyboardInstruction = false;
 	private float m_keyboardInstructionHideStartTime;
@@ -68,6 +73,21 @@ public class UIManager : MonoBehaviour
 			bgColor.a = Mathf.Lerp(bgColor.a, 1f, Time.deltaTime);
 			Instance.m_EulogyBackground.color = bgColor;
 			Instance.m_EulogyRoot.transform.Translate(Vector2.up * 60f * Time.deltaTime, Space.World);
+		}
+	}
+
+	public static void CreateEulogies(List<SheepData> deadSheep)
+	{
+		for (int i = 0; i < deadSheep.Count; i++)
+		{
+			GameObject prefab = GameObject.Instantiate (Instance.m_EulogyPrefab);
+			prefab.transform.SetParent (Instance.m_EulogyScroller, false);
+
+			RectTransform rect = prefab.transform as RectTransform;
+			rect.localPosition = new Vector3 (rect.localPosition.x, -90 - (i * 150), 0);
+
+			Eulogy eulogy = prefab.GetComponent<Eulogy> ();
+			eulogy.SetData (deadSheep [i]);
 		}
 	}
 

@@ -35,6 +35,7 @@ public class Game : MonoBehaviour
 
 	private DogEntity mDog;
 	private List<SheepEntity> mSheepList;
+	private List<SheepData> mDeadSheep;
 
 	private void Start()
 	{
@@ -48,6 +49,8 @@ public class Game : MonoBehaviour
 		mSheepList = new List<SheepEntity> ();
 
 		mCurrentLevel = LevelDataBase.Instance.GetLevel (0);
+
+		mDeadSheep = new List<SheepData> ();
 		
 		SetState(eState.Menu);
 		SplashAnimation.Appear();
@@ -175,10 +178,9 @@ public class Game : MonoBehaviour
 
 	public static void ResolveWave()
 	{
-		EntityManager.DrownSheep();
+		Instance.mDeadSheep.AddRange(EntityManager.DrownSheep());
 		int sheepCount = EntityManager.GetSheepCount ();
 		Instance.mScoreKeeper.AddScore(sheepCount);
-
 	}
 
 	public static void FinishWave()
@@ -188,6 +190,7 @@ public class Game : MonoBehaviour
 		if (sheepCount == 0)
 		{
 			ResetEulogy.ResetPosition();
+			UIManager.CreateEulogies (Instance.mDeadSheep);
 			Instance.SetState (eState.GameEnd);
 		}
 		else if (Instance.mCurrentWaveIndex >= Instance.mCurrentLevel.WaveCount)

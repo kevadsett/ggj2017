@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class SheepEntity : Entity
 {
@@ -7,15 +8,21 @@ public class SheepEntity : Entity
 	private DogEntity dog;
 	private float moveTimer;
 	private GameData gameData;
+	public SheepData Data;
 
 	public SheepEntity (int zId, int zX, int zZ, DogEntity zDog) : base (zId, zX, zZ)
 	{
 		gameData = GameDataBase.Instance.GetData (0);
 		dog = zDog;
+		Data = SheepDataBase.Instance.GetSheep ();
 
 		var obj = Object.Instantiate (gameData.SheepPrefab);
 		viewCube = obj.GetComponent <RollingCube>();
 		viewCube.InitAtPoint (new Vector3 (zX, 0.0f, zZ));
+
+		Canvas sheepCanvas = obj.GetComponentInChildren<Canvas> ();
+		Text nameText = sheepCanvas.GetComponentInChildren<Text> ();
+		nameText.text = Data.name;
 
 		_moveableTypes = new List<Tile.eType> ()
 		{
