@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class TileManager
 {
-	private GameObject _moundObject;
+	private GameObject mMoundObject;
 	private static TileManager Instance;
 
 	public static int WIDTH;
@@ -13,12 +13,15 @@ public class TileManager
 
 	private GameData mGameData;
 
+	private List<GameObject> mMoundObjects;
+
 	public TileManager(GameObject moundObject)
 	{
 		Instance = this;
 
 		mTiles = new List<Tile>();
-		_moundObject = moundObject;
+		mMoundObjects = new List<GameObject> ();
+		mMoundObject = moundObject;
 	}
 	public void SetupTiles(int moundTargetCount)
 	{
@@ -39,6 +42,10 @@ public class TileManager
 			}
 		}
 
+		for (int i = 0; i < mMoundObjects.Count; i++)
+		{
+			Object.Destroy (mMoundObjects [i]);
+		}
 		Tile[] moundTiles = new Tile[moundTargetCount];
 		int createdMoundsCount = 0;
 		while (createdMoundsCount < moundTargetCount)
@@ -55,9 +62,9 @@ public class TileManager
 		for (int i = 0; i < moundTiles.Length; i++)
 		{
 			Tile tile = moundTiles [i];
-			Debug.Log (tile);
-			GameObject moundObject = GameObject.Instantiate (_moundObject);
+			GameObject moundObject = GameObject.Instantiate (mMoundObject);
 			moundObject.transform.position = new Vector3 (tile.PosX, 0, tile.PosZ);
+			mMoundObjects.Add (moundObject);
 		}
 	}
 	

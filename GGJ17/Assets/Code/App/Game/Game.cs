@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Game : MonoBehaviour
 {
@@ -25,6 +26,12 @@ public class Game : MonoBehaviour
 	private eState mState;
 	private float mRoundStartedTime;
 
+	private LevelData mCurrentLevel;
+
+	private int mCurrentWaveIndex = 0;
+
+	private DogEntity mDog;
+	private List<SheepEntity> mSheepList;
 
 	private void Start()
 	{
@@ -34,10 +41,10 @@ public class Game : MonoBehaviour
 		mScoreKeeper = new Score();
 		new EntityManager();
 
-		var testDog = new DogEntity (0, 0, 0);
-		new SheepEntity (0, 2, 1, testDog);
-		new SheepEntity (0, 3, 1, testDog);
-		new SheepEntity (0, 4, 3, testDog);
+		mDog = new DogEntity (0, 0, 0);
+		mSheepList = new List<SheepEntity> ();
+
+		mCurrentLevel = LevelDataBase.Instance.GetLevel (0);
 		
 		SetState(eState.Menu);
 	}
@@ -52,22 +59,18 @@ public class Game : MonoBehaviour
 				SetupGame();
 			}
 			break;
-		case eState.Game:
-			EntityManager.UpdateEntities(mState);
+		case eState.Game:			
+				EntityManager.UpdateEntities (mState);
 
-			var timePerRound = GameDataBase.Instance.GetData(0).RoundTime;
-			var timeElapsed = (Time.time - mRoundStartedTime);
-			if (timeElapsed >= timePerRound - 1.5f)
-			{
-				Horn.TriggerAnimation();
-			}
-
-			if (timeElapsed >= timePerRound)
-			{
-				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
-				ToiletWave.TriggerWave();
-			}
-			UIManager.UpdateUI(Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
+				var timePerRound = mCurrentLevel.WaveIntervalTime;
+				if ((Time.time - mRoundStartedTime) >= timePerRound)
+				{
+					mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
+					ToiletWave.TriggerWave();
+					Horn.TriggerAnimation();
+					mCurrentWaveIndex++;
+				}
+				UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 
 			if (Input.GetKeyUp(KeyCode.T))
 			{
@@ -93,10 +96,26 @@ public class Game : MonoBehaviour
 		//randomise sheep
 		//place dog
 		//reset tiles
+		mCurrentWaveIndex = 0;
 		GameStartTime = Time.time;
-		Instance.mTileManager.SetupTiles(3);
+		for (int i = 0; i < mSheepList.Count; i++)
+		{
+			mSheepList [i].Destroy ();
+		}
+		mSheepList.Clear ();
+		for (int i = 0; i < mCurrentLevel.SheepCount; i++)
+		{
+			mSheepList.Add(new SheepEntity (0, Random.Range(1, 16), Random.Range(1, 8), mDog));
+		}
+		Instance.mTileManager.SetupTiles(mCurrentLevel.SheepCount);
 		Instance.SetState(eState.Game);
 		mRoundStartedTime = Time.time;
+	}
+
+	private void StartNextLevel()
+	{
+		mCurrentLevel = LevelDataBase.Instance.GetNextLevel ();
+		SetupGame ();
 	}
 
 	public static void StartGame()
@@ -117,6 +136,17 @@ public class Game : MonoBehaviour
 	public static void ResolveWave()
 	{
 		EntityManager.DrownSheep();
-		Instance.mScoreKeeper.AddScore(EntityManager.GetSheepCount());
+		int sheepCount = EntityManager.GetSheepCount ();
+		Instance.mScoreKeeper.AddScore(sheepCount);
+
+	}
+
+	public static void FinishWave()
+	{
+		int sheepCount = EntityManager.GetSheepCount ();
+		if (Instance.mCurrentWaveIndex < Instance.mCurrentLevel.WaveCount || sheepCount == 0)
+		{
+			Instance.StartNextLevel ();
+		}
 	}
 }

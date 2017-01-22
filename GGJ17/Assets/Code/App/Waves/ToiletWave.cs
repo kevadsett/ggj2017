@@ -93,10 +93,10 @@ public class ToiletWave : MonoBehaviour
 			var animValue = m_OutCurve.Evaluate(ratio);
 			var newPosition = (m_OutPosition.position - m_InPosition.position)*animValue + m_InPosition.position;
 			transform.position = newPosition;
-
 			if (ratio >= 1f)
 			{
 				mWaveState = eState.Done;
+				Game.FinishWave ();
 			}
 			break;
 		}
