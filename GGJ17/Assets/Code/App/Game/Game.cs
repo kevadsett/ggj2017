@@ -213,6 +213,6 @@ public class Game : MonoBehaviour
 
 	public static void MultiplyInterval()
 	{
-		_intervalMultiplier *= GameDataBase.Instance.GetData ().RestartTimerMultiplier;
+		Instance._intervalMultiplier *= GameDataBase.Instance.GetData ().RestartTimerMultiplier;
 	}
 }
