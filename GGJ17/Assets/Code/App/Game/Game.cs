@@ -153,5 +153,8 @@ public class Game : MonoBehaviour
 		{
 			Instance.StartNextLevel ();
 		}
+
+		var sound = "Success" + sheepCount;
+		AudioPlayer.PlaySound (sound, Vector3.zero);
 	}
 }
