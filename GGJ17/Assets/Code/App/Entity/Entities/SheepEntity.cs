@@ -41,7 +41,14 @@ public class SheepEntity : Entity
 
 	private void TryToMove (int zX, int zZ)
 	{
-		bool shallObey = Random.Range (0, 100) < gameData.SheepObediencePercent;
+		var obedianceValue = gameData.SheepObediencePercent;
+
+		if (zX == 0 || zZ == 0 || zX == GameDataBase.Instance.GetData(0).GridDimensions.x - 1 || zZ == GameDataBase.Instance.GetData(0).GridDimensions.y - 1)
+		{
+			obedianceValue = 40;
+		}
+
+		bool shallObey = Random.Range (0, 100) < obedianceValue;
 
 		if (shallObey && MoveToPosition (zX, zZ, _moveableTypes))
 		{
