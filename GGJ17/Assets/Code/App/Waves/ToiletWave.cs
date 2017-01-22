@@ -25,12 +25,12 @@ public class ToiletWave : MonoBehaviour
 	}
 
 
-	private static ToiletWave Instance;
+	public static ToiletWave Instance;
 
 	private float mTimeStartedWave;
 	private float mTimeToAnimate;
 	private eState mWaveState;
-
+	private bool mWaveResolved = false;
 
 	private void Start()
 	{
@@ -43,6 +43,7 @@ public class ToiletWave : MonoBehaviour
 	{
 		Instance.mTimeStartedWave = Time.time;
 		Instance.mWaveState = eState.Incoming;
+		Instance.mWaveResolved = false;
 	}
 
 	public static bool IsDone()
@@ -64,12 +65,17 @@ public class ToiletWave : MonoBehaviour
 			var animValue = m_InCurve.Evaluate(ratio);
 			var newPosition = (m_InPosition.position - m_OutPosition.position)*animValue + m_OutPosition.position;
 			transform.position = newPosition;
+			
+			if (ratio >= 0.7 && !mWaveResolved)
+			{
+				mWaveResolved = true;
+				Game.ResolveWave();
+			}
 
 			if (ratio >= 1f)
 			{
 				mWaveState = eState.Outgoing;
 				mTimeStartedWave = Time.time;
-				//flush the sheep here
 			}
 			break;
 		}

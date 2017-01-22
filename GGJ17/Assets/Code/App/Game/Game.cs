@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Game : MonoBehaviour
 {
+	[SerializeField]
+	private Transform m_WaterPlane;
+
 	public static float GameStartTime = 0;
 	public static Game Instance;
 	public GameObject MoundObject;
@@ -21,6 +24,7 @@ public class Game : MonoBehaviour
 	private TileManager mTileManager;
 	private eState mState;
 	private float mRoundStartedTime;
+
 
 	private void Start()
 	{
@@ -56,8 +60,6 @@ public class Game : MonoBehaviour
 			{
 				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
 				ToiletWave.TriggerWave();
-
-				mScoreKeeper.AddScore(EntityManager.GetSheepCount());
 			}
 			UIManager.UpdateUI(Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 
@@ -104,5 +106,11 @@ public class Game : MonoBehaviour
 	public static void GameEnd()
 	{
 		Instance.SetState(eState.GameEnd);
+	}
+
+	public static void ResolveWave()
+	{
+		EntityManager.DrownSheep();
+		Instance.mScoreKeeper.AddScore(EntityManager.GetSheepCount());
 	}
 }

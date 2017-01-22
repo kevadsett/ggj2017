@@ -13,6 +13,7 @@ public class RollingCube : MonoBehaviour
 	public Transform hopXform;
 	public Transform rotXform;
 	public Transform shadowXform;
+	public bool drowned = false;
 
 	private Vector3 lastPos;
 	private Vector3 newPos;
@@ -54,6 +55,9 @@ public class RollingCube : MonoBehaviour
 
 	private void Update ()
 	{
+		if (drowned)
+			return;
+
 		DEBUG_INPUT ();
 
 		timer += Time.deltaTime * moveSpeed;

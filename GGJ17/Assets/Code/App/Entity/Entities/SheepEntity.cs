@@ -67,9 +67,18 @@ public class SheepEntity : Entity
 		viewCube.MoveToPoint (new Vector3 (PosX, 0.0f, PosZ));
 	}
 
-	protected override void Destroy ()
+	public bool IsSafe()
 	{
-		Object.Destroy (viewCube);
+		var tile = TileManager.GetTileAtPosition(PosX, PosZ);
+
+		return (tile.TileType == Tile.eType.Mound);
+	}
+
+	public override void Destroy ()
+	{
+		//Object.Destroy (viewCube.gameObject);
+		viewCube.transform.SetParent(ToiletWave.Instance.transform);
+		viewCube.drowned = true;
 
 		base.Destroy ();
 	}
