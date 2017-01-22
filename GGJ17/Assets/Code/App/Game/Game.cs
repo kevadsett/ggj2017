@@ -20,7 +20,6 @@ public class Game : MonoBehaviour
 	private TileManager mTileManager;
 	private eState mState;
 	private float mRoundStartedTime;
-	private float mTimePerRound = 10;
 
 	private void Start()
 	{
@@ -51,12 +50,13 @@ public class Game : MonoBehaviour
 		case eState.Game:
 			EntityManager.UpdateEntities(mState);
 
-			if ((Time.time - mRoundStartedTime) >= mTimePerRound)
+			var timePerRound = GameDataBase.Instance.GetData(0).RoundTime;
+			if ((Time.time - mRoundStartedTime) >= timePerRound)
 			{
-				mRoundStartedTime = Time.time + 4f;
+				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
 				ToiletWave.TriggerWave();
 			}
-			UIManager.UpdateUI(Instance.mState, (mTimePerRound - (Time.time - mRoundStartedTime)));
+			UIManager.UpdateUI(Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 			break;
 		}
 	}

@@ -28,12 +28,13 @@ public class ToiletWave : MonoBehaviour
 	private static ToiletWave Instance;
 
 	private float mTimeStartedWave;
-	private float mTimeToAnimate = 2f;
+	private float mTimeToAnimate;
 	private eState mWaveState;
 
 
 	private void Start()
 	{
+		mTimeToAnimate = GameDataBase.Instance.GetData(0).TimeToAnimateWave * 0.5f;
 		Instance = this;
 		mWaveState = eState.Done;
 	}
