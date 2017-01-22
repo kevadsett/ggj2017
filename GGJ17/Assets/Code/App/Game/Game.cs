@@ -38,6 +38,8 @@ public class Game : MonoBehaviour
 	private List<SheepEntity> mSheepList;
 	private List<SheepData> mDeadSheep;
 
+	private float _intervalMultiplier = 1;
+
 	private void Start()
 	{
 		Instance = this;
@@ -207,5 +209,10 @@ public class Game : MonoBehaviour
 
 		var sound = "Success" + sheepCount;
 		AudioPlayer.PlaySound (sound, Vector3.zero);
+	}
+
+	public static void MultiplyInterval()
+	{
+		_intervalMultiplier *= GameDataBase.Instance.GetData ().RestartTimerMultiplier;
 	}
 }

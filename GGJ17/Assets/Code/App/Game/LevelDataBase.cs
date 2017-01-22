@@ -20,7 +20,12 @@ public class LevelDataBase : MonoBehaviour {
 
 	public LevelData GetNextLevel()
 	{
-		_levelIndex = (_levelIndex + 1) % Levels.Count;
+		_levelIndex++;
+		if (_levelIndex >= Levels.Count)
+		{
+			_levelIndex = 0;
+			Game.MultiplyInterval ();
+		}
 		return Levels[_levelIndex];
 	}
 }

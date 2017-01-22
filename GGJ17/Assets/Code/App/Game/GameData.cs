@@ -13,4 +13,5 @@ public class GameData : ScriptableObject {
 	public int SheepObediencePercent;
 	public float WaveSpeed;
 	public float TimeToAnimateWave;
+	public float RestartTimerMultiplier;
 }
