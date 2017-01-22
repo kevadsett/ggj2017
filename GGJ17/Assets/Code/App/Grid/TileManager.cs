@@ -18,7 +18,7 @@ public class TileManager
 
 		mTiles = new List<Tile>();
 	}
-	public void SetupTiles()
+	public void SetupTiles(int moundTargetCount)
 	{
 		mTiles.Clear();
 
@@ -31,10 +31,26 @@ public class TileManager
 		{
 			for (int j = 0; j < HEIGHT; ++j)
 			{
-				var tileType = Tile.eType.Sand;
+				var tileType = Tile.eType.Ground;
 				CreateTile(id, i, j, tileType);
 				id++;
 			}
+		}
+
+		Tile[] moundTiles = new Tile[moundTargetCount];
+		while (moundTiles.Length < moundTargetCount)
+		{
+			int randomIndex = Random.Range (0, id);
+			Tile tile = mTiles[randomIndex];
+			if (tile.TileType == Tile.eType.Ground)
+			{
+				tile.TileType = Tile.eType.Mound;
+				moundTiles [moundTiles.Length] = tile;
+			}
+		}
+		for (int i = 0; i < moundTiles.Length; i++)
+		{
+			
 		}
 	}
 	
