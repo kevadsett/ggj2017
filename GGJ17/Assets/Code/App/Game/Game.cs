@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class Game : MonoBehaviour
 {
+	[SerializeField]
+	private Transform m_WaterPlane;
+
 	public static float GameStartTime = 0;
 	public static Game Instance;
 	public GameObject MoundObject;
@@ -64,17 +67,23 @@ public class Game : MonoBehaviour
 				var timePerRound = mCurrentLevel.WaveIntervalTime;
 				if ((Time.time - mRoundStartedTime) >= timePerRound)
 				{
-					mRoundStartedTime = Time.time + GameDataBase.Instance.GetData (0).TimeToAnimateWave;
-					ToiletWave.TriggerWave ();
+					mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
+					ToiletWave.TriggerWave();
+					Horn.TriggerAnimation();
 					mCurrentWaveIndex++;
-
-					mScoreKeeper.AddScore (EntityManager.GetSheepCount ());
 				}
 				UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 			}
 			else
 			{
+				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
+				ToiletWave.TriggerWave();
+
+				mScoreKeeper.AddScore(EntityManager.GetSheepCount());
 				StartNextLevel ();
+				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
+				ToiletWave.TriggerWave();
+				Horn.TriggerAnimation();
 			}
 
 			if (Input.GetKeyUp(KeyCode.T))
@@ -136,5 +145,11 @@ public class Game : MonoBehaviour
 	public static void GameEnd()
 	{
 		Instance.SetState(eState.GameEnd);
+	}
+
+	public static void ResolveWave()
+	{
+		EntityManager.DrownSheep();
+		Instance.mScoreKeeper.AddScore(EntityManager.GetSheepCount());
 	}
 }

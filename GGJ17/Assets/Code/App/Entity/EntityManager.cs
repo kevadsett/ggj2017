@@ -45,6 +45,29 @@ public class EntityManager
 		return count;
 	}
 
+	public static void DrownSheep()
+	{
+		List<Entity> drownedSheep = new List<Entity>();
+
+		foreach (Entity entity in Instance.mEntities)
+		{
+			var sheep = entity as SheepEntity;
+
+			if (sheep != null)
+			{
+				if (!sheep.IsSafe())
+				{
+					drownedSheep.Add(sheep);
+				}
+			}
+		}
+
+		foreach (SheepEntity sheep in drownedSheep)
+		{
+			sheep.Destroy();
+		}
+	}
+
 	public static void RegisterEntity(Entity zEntity)
 	{
 		Instance.mEntities.Add(zEntity);
