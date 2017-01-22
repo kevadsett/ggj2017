@@ -19,8 +19,6 @@ public class Game : MonoBehaviour
 
 	private TileManager mTileManager;
 	private eState mState;
-	private WaveManager mWaveManager;
-	private bool changed = false;
 	private float mRoundStartedTime;
 	private float mTimePerRound = 10;
 

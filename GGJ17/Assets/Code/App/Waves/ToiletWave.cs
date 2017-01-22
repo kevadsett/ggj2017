@@ -30,7 +30,6 @@ public class ToiletWave : MonoBehaviour
 	private float mTimeStartedWave;
 	private float mTimeToAnimate = 2f;
 	private eState mWaveState;
-	private int mCount = 0;
 
 
 	private void Start()
