@@ -28,6 +28,9 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private Image m_KeyboardInstruction;
 
+	[SerializeField]
+	private Text m_WavesText;
+
 
 	private bool m_isHidingKeyboardInstruction = false;
 	private float m_keyboardInstructionHideStartTime;
@@ -38,7 +41,7 @@ public class UIManager : MonoBehaviour
 		Instance = this;
 	}
 
-	public static void UpdateUI(Game.eState zGameState, float zTimer, bool hideKeyboardInstruction = false, AnimationCurve instructionUIFadeCurve = null)
+	public static void UpdateUI(Game.eState zGameState, int zWave, float zTimer, bool hideKeyboardInstruction = false, AnimationCurve instructionUIFadeCurve = null)
 	{
 		foreach (UIElement element in Instance.m_UIElements)
 		{
@@ -69,6 +72,8 @@ public class UIManager : MonoBehaviour
 			Instance.m_EulogyBackground.color = bgColor;
 			Instance.m_EulogyRoot.transform.Translate(Vector2.up * 60f * Time.deltaTime, Space.World);
 		}
+
+		Instance.m_WavesText.text = "" + (zWave + 2);
 	}
 
 	private void UpdateLetterBoxes()

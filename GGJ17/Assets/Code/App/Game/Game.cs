@@ -92,24 +92,17 @@ public class Game : MonoBehaviour
 			}
 			if (mDog.HasMoved)
 			{
-				UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)), true, InstructionUIFadeCurve);
+				UIManager.UpdateUI (Instance.mState, LevelDataBase.Instance._levelIndex, (timePerRound - (Time.time - mRoundStartedTime)), true, InstructionUIFadeCurve);
 			}
 			else
 			{
-				UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
+				UIManager.UpdateUI (Instance.mState, LevelDataBase.Instance._levelIndex, (timePerRound - (Time.time - mRoundStartedTime)));
 
 			}
-
-			if (elapsedTime >= timePerRound)
-			{
-				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
-				ToiletWave.TriggerWave();
-				mCurrentWaveIndex++;
-			}
-			UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
+			UIManager.UpdateUI (Instance.mState, LevelDataBase.Instance._levelIndex, (timePerRound - (Time.time - mRoundStartedTime)));
 			break;
 		case eState.GameEnd:
-			UIManager.UpdateUI(Instance.mState, 0);
+			UIManager.UpdateUI(Instance.mState, LevelDataBase.Instance._levelIndex, 0);
 			break;
 		case eState.LevelSucceeded:
 			if (Input.GetKeyUp (KeyCode.Space))
@@ -124,7 +117,7 @@ public class Game : MonoBehaviour
 	{
 		Instance.mState = zNewState;
 
-		UIManager.UpdateUI(Instance.mState, (Time.time - mRoundStartedTime));
+		UIManager.UpdateUI(Instance.mState, LevelDataBase.Instance._levelIndex, (Time.time - mRoundStartedTime));
 	}
 
 	private void SetupGame()
