@@ -25,13 +25,20 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private Text m_SheepScore;
 
+	[SerializeField]
+	private Image m_KeyboardInstruction;
+
+
+	private bool m_isHidingKeyboardInstruction = false;
+	private float m_keyboardInstructionHideStartTime;
+	private AnimationCurve m_InstructionFadeCurve;
 
 	private void Awake()
 	{
 		Instance = this;
 	}
 
-	public static void UpdateUI(Game.eState zGameState, float zTimer)
+	public static void UpdateUI(Game.eState zGameState, float zTimer, bool hideKeyboardInstruction = false, AnimationCurve instructionUIFadeCurve = null)
 	{
 		foreach (UIElement element in Instance.m_UIElements)
 		{
@@ -43,6 +50,16 @@ public class UIManager : MonoBehaviour
 			Instance.UpdateLetterBoxes();
 			Instance.UpdateTimer(zTimer);
 			Instance.UpdateScore();
+			if (hideKeyboardInstruction)
+			{
+				if (!Instance.m_isHidingKeyboardInstruction)
+				{
+					Instance.m_keyboardInstructionHideStartTime = Time.time;
+					Instance.m_isHidingKeyboardInstruction = true;
+					Instance.m_InstructionFadeCurve = instructionUIFadeCurve;
+				}
+				Instance.HideKeyboardInstruction ();
+			}
 		}
 
 		if (zGameState == Game.eState.GameEnd)
@@ -87,5 +104,13 @@ public class UIManager : MonoBehaviour
 	public void NextLevel()
 	{
 		Game.StartNextLevel ();
+	}
+
+	public void HideKeyboardInstruction()
+	{
+		Color colour = m_KeyboardInstruction.color;
+		float timeSinceHideCall = Time.time - m_keyboardInstructionHideStartTime;
+		float alphaValue = m_InstructionFadeCurve.Evaluate(timeSinceHideCall);
+		m_KeyboardInstruction.color = new Color (colour.r, colour.g, colour.b, alphaValue);
 	}
 }

@@ -11,6 +11,8 @@ public class Game : MonoBehaviour
 	public static Game Instance;
 	public GameObject MoundObject;
 
+	public AnimationCurve InstructionUIFadeCurve;
+
 	public enum eState
 	{
 		Splash,
@@ -61,22 +63,29 @@ public class Game : MonoBehaviour
 			}
 			break;
 		case eState.Game:			
-				EntityManager.UpdateEntities (mState);
+			EntityManager.UpdateEntities (mState);
 
-				var timePerRound = mCurrentLevel.WaveIntervalTime;
-				var elapsedTime = (Time.time - mRoundStartedTime);
-				if (elapsedTime >= timePerRound - 2f)
-				{
-					Horn.TriggerAnimation();
-				}
+			var timePerRound = mCurrentLevel.WaveIntervalTime;
+			var elapsedTime = (Time.time - mRoundStartedTime);
+			if (elapsedTime >= timePerRound - 2f)
+			{
+				Horn.TriggerAnimation ();
+			}
 
-				if (elapsedTime >= timePerRound)
-				{
-					mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
-					ToiletWave.TriggerWave();
-					mCurrentWaveIndex++;
-				}
+			if (elapsedTime >= timePerRound)
+			{
+				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData (0).TimeToAnimateWave;
+				ToiletWave.TriggerWave ();
+				mCurrentWaveIndex++;
+			}
+			if (mDog.HasMoved)
+			{
+				UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)), true, InstructionUIFadeCurve);
+			}
+			else
+			{
 				UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
+			}
 
 			if (Input.GetKeyUp(KeyCode.T))
 			{

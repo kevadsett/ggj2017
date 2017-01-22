@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DogEntity : Entity {
+	public bool HasMoved;
 	private GameObject _gameObject;
 	private DogView _view;
 	private GameData _gameData;
@@ -64,6 +65,7 @@ public class DogEntity : Entity {
 		if (shouldMove)
 		{
 			_view.MoveToPoint (new Vector3(PosX, 0, PosZ));
+			HasMoved = true;
 		}
 		return shouldMove;
 	}
