@@ -87,12 +87,17 @@ public class UIManager : MonoBehaviour
 	private void UpdateTimer(float zTimer)
 	{
 		var prettyTimer = Mathf.Clamp(zTimer, 0f, float.MaxValue);
-		m_Timer.text = "Wave incoming in " + prettyTimer.ToString("0.00");
+		m_Timer.text = "" + Mathf.CeilToInt (prettyTimer);
+	}
+
+	public static void ShowHideTimer(bool show)
+	{
+		Instance.m_Timer.gameObject.SetActive (show);
 	}
 
 	private void UpdateScore()
 	{
-		m_SheepScore.text = "Sheep Points: " + Score.Instance.CurrentScore;
+		m_SheepScore.text = "" + Score.Instance.CurrentScore;
 	}
 
 	public void StartGame()

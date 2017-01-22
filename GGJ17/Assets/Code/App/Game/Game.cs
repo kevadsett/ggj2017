@@ -87,6 +87,7 @@ public class Game : MonoBehaviour
 
 			if (elapsedTime >= timePerRound)
 			{
+				UIManager.ShowHideTimer (false);
 				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData (0).TimeToAnimateWave;
 				ToiletWave.TriggerWave ();
 				mCurrentWaveIndex++;
@@ -110,6 +111,7 @@ public class Game : MonoBehaviour
 			if (mNextWaveTimer >= 1.5f)
 			{
 				StartNextLevel ();
+				UIManager.ShowHideTimer (true);
 			}
 			break;
 		}
