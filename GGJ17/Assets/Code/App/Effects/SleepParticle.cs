@@ -14,6 +14,9 @@ public class SleepParticle : MonoBehaviour
 	[SerializeField]
 	private AnimationCurve m_CurveZ;
 
+	[SerializeField]
+	private AnimationCurve m_Scale;
+
 
 	private float mStartTime;
 
@@ -34,9 +37,13 @@ public class SleepParticle : MonoBehaviour
 
 		var newPosition = transform.position;
 
-		newPosition.x += m_CurveX.Evaluate(ratio) * 0.25f;
-		newPosition.z += m_CurveZ.Evaluate(ratio) * 0.5f;
+		newPosition.x += m_CurveX.Evaluate(ratio) * 0.1f;
+		newPosition.z += m_CurveZ.Evaluate(ratio) * 0.2f;
 
 		transform.position = newPosition;
+
+		var scale = m_Scale.Evaluate(ratio);
+		//Debug.Log(scale.ToString());
+		transform.localScale = new Vector3(scale, scale, scale);
 	}
 }

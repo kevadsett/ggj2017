@@ -22,7 +22,7 @@ public class Emitter : MonoBehaviour
 	{
 		if (Time.time > mLastCreationTime + m_AnimationTime)
 		{
-			mLastCreationTime = Time.time - Random.Range(0f, 0.12f);
+			mLastCreationTime = Time.time - Random.Range(0f, 0.22f);
 			var newParticle = GameObject.Instantiate(m_Particle);
 			newParticle.transform.position = transform.position;
 		}
