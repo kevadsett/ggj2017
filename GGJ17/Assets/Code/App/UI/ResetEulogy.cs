@@ -7,7 +7,7 @@ public class ResetEulogy : MonoBehaviour
 	private static ResetEulogy Instance;
 
 
-	private void Start()
+	private void Awake()
 	{
 		Instance = this;
 	}
@@ -16,5 +16,7 @@ public class ResetEulogy : MonoBehaviour
 	{
 		RectTransform rect = Instance.transform as RectTransform;
 		rect.localPosition = new Vector3(0, -400, 0);
+
+		MusicPlayer.Play (1);
 	}
 }

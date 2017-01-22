@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,6 +33,10 @@ public class UIManager : MonoBehaviour
 
 	[SerializeField]
 	private GameObject m_EulogyPrefab;
+	
+	[SerializeField]
+	private Text m_WavesText;
+
 
 	private bool m_isHidingKeyboardInstruction = false;
 	private float m_keyboardInstructionHideStartTime;
@@ -43,7 +47,7 @@ public class UIManager : MonoBehaviour
 		Instance = this;
 	}
 
-	public static void UpdateUI(Game.eState zGameState, float zTimer, bool hideKeyboardInstruction = false, AnimationCurve instructionUIFadeCurve = null)
+	public static void UpdateUI(Game.eState zGameState, int zWave, float zTimer, bool hideKeyboardInstruction = false, AnimationCurve instructionUIFadeCurve = null)
 	{
 		foreach (UIElement element in Instance.m_UIElements)
 		{
@@ -74,6 +78,8 @@ public class UIManager : MonoBehaviour
 			Instance.m_EulogyBackground.color = bgColor;
 			Instance.m_EulogyRoot.transform.Translate(Vector2.up * 60f * Time.deltaTime, Space.World);
 		}
+
+		Instance.m_WavesText.text = "" + (zWave + 2);
 	}
 
 	public static void CreateEulogies(List<SheepData> deadSheep)
@@ -102,12 +108,17 @@ public class UIManager : MonoBehaviour
 	private void UpdateTimer(float zTimer)
 	{
 		var prettyTimer = Mathf.Clamp(zTimer, 0f, float.MaxValue);
-		m_Timer.text = "Wave incoming in " + prettyTimer.ToString("0.00");
+		m_Timer.text = "" + Mathf.CeilToInt (prettyTimer);
+	}
+
+	public static void ShowHideTimer(bool show)
+	{
+		Instance.m_Timer.gameObject.SetActive (show);
 	}
 
 	private void UpdateScore()
 	{
-		m_SheepScore.text = "Sheep Points: " + Score.Instance.CurrentScore;
+		m_SheepScore.text = "" + Score.Instance.CurrentScore;
 	}
 
 	public void StartGame()

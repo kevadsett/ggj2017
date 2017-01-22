@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelDataBase : MonoBehaviour {
 	public static LevelDataBase Instance;
 	public List<LevelData> Levels;
-	private int _levelIndex;
+	public int _levelIndex;
 
 	void Awake()
 	{
