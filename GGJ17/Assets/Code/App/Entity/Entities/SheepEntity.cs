@@ -19,7 +19,8 @@ public class SheepEntity : Entity
 
 		_moveableTypes = new List<Tile.eType> ()
 		{
-			Tile.eType.Grass
+			Tile.eType.Sand,
+			Tile.eType.Safety
 		};
 	}
 
@@ -62,6 +63,7 @@ public class SheepEntity : Entity
 			}
 		}
 
+		AudioPlayer.PlaySound ("SheepRoll", new Vector3 (PosX, 0.0f, PosZ));
 		viewCube.MoveToPoint (new Vector3 (PosX, 0.0f, PosZ));
 	}
 
