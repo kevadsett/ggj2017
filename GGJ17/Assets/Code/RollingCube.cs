@@ -21,6 +21,7 @@ public class RollingCube : MonoBehaviour
 	private Quaternion newRot;
 	private float timer;
 
+
 	public void InitAtPoint (Vector3 point)
 	{
 		lastPos = newPos = point;

@@ -27,6 +27,8 @@ public class ToiletWave : MonoBehaviour
 
 	public static ToiletWave Instance;
 
+
+	private List<RollingCube> mCarriedSheep;
 	private float mTimeStartedWave;
 	private float mTimeToAnimate;
 	private eState mWaveState;
@@ -34,6 +36,7 @@ public class ToiletWave : MonoBehaviour
 
 	private void Start()
 	{
+		mCarriedSheep = new List<RollingCube>();
 		mTimeToAnimate = GameDataBase.Instance.GetData(0).TimeToAnimateWave * 0.5f;
 		Instance = this;
 		mWaveState = eState.Done;
@@ -59,6 +62,12 @@ public class ToiletWave : MonoBehaviour
 		{
 		case eState.Done:
 			transform.position = m_OutPosition.position;
+
+			foreach (RollingCube sheep in mCarriedSheep)
+			{
+				GameObject.Destroy(sheep.gameObject);
+			}
+			mCarriedSheep.Clear();
 			break;
 		case eState.Incoming:
 		{
@@ -84,8 +93,18 @@ public class ToiletWave : MonoBehaviour
 			var animValue = m_OutCurve.Evaluate(ratio);
 			var newPosition = (m_OutPosition.position - m_InPosition.position)*animValue + m_InPosition.position;
 			transform.position = newPosition;
+
+			if (ratio >= 1f)
+			{
+				mWaveState = eState.Done;
+			}
 			break;
 		}
 		}
+	}
+
+	public void CarrySheep(RollingCube zSheep)
+	{
+		mCarriedSheep.Add(zSheep);
 	}
 }

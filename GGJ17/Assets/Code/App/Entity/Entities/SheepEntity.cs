@@ -79,6 +79,7 @@ public class SheepEntity : Entity
 		//Object.Destroy (viewCube.gameObject);
 		viewCube.transform.SetParent(ToiletWave.Instance.transform);
 		viewCube.drowned = true;
+		ToiletWave.Instance.CarrySheep(viewCube);
 
 		base.Destroy ();
 	}
