@@ -20,7 +20,7 @@ public class DogEntity : Entity {
 
 		_moveableTypes = new List<Tile.eType> ()
 		{
-			Tile.eType.Grass,
+			Tile.eType.Water,
 			Tile.eType.Sand
 		};
 	}

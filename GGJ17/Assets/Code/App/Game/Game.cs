@@ -17,13 +17,8 @@ public class Game : MonoBehaviour
 		Dialogue,
 	}
 
-	public GameObject GroundPrefab;
-
 	private TileManager mTileManager;
 	private eState mState;
-	private WaveManager mWaveManager;
-
-	private bool changed = false;
 
 	private void Start()
 	{
@@ -31,7 +26,6 @@ public class Game : MonoBehaviour
 
 		mTileManager = new TileManager();
 		mTileManager.SetupTiles();
-		mTileManager.RenderTiles();
 		new EntityManager();
 
 		var testDog = new DogEntity (0, 0, 0);
@@ -40,7 +34,6 @@ public class Game : MonoBehaviour
 		new SheepEntity (0, 4, 3, testDog);
 		
 		SetState(eState.Menu);
-		mWaveManager = new WaveManager ();
 	}
 
 	private void Update()
@@ -54,11 +47,9 @@ public class Game : MonoBehaviour
 			}
 			break;
 		case eState.Game:
-			mWaveManager.Update();
 			EntityManager.UpdateEntities(mState);
 			break;
 		}
-		mTileManager.RenderTiles ();
 	}
 
 	private void SetState(eState zNewState)
@@ -75,10 +66,7 @@ public class Game : MonoBehaviour
 		//place dog
 		//reset tiles
 		GameStartTime = Time.time;
-		Instance.mWaveManager.Reset();
 		Instance.mTileManager.SetupTiles();
-		Instance.mTileManager.SetupGround(Instance.GroundPrefab);
-		Instance.mTileManager.RenderTiles();
 		Instance.SetState(eState.Game);
 	}
 

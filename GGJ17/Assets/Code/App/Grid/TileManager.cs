@@ -9,7 +9,6 @@ public class TileManager
 	public static int HEIGHT;
 
 	private List<Tile> mTiles;
-	private List<TileRenderer> mRenderTiles;
 
 	private GameData mGameData;
 
@@ -18,16 +17,10 @@ public class TileManager
 		Instance = this;
 
 		mTiles = new List<Tile>();
-		mRenderTiles = new List<TileRenderer>();
 	}
 	public void SetupTiles()
 	{
 		mTiles.Clear();
-		foreach (TileRenderer tile in mRenderTiles)
-		{
-			GameObject.Destroy(tile.gameObject);
-		}
-		mRenderTiles.Clear();
 
 		int id = 0;
 		mGameData = GameDataBase.Instance.GetData ();
@@ -38,11 +31,7 @@ public class TileManager
 		{
 			for (int j = 0; j < HEIGHT; ++j)
 			{
-				var tileType = Tile.eType.Grass;
-				if (i == 0 || i == WIDTH - 1 || j == 0)
-				{
-					tileType = Tile.eType.Sand;
-				}
+				var tileType = Tile.eType.Sand;
 				CreateTile(id, i, j, tileType);
 				id++;
 			}
@@ -65,37 +54,6 @@ public class TileManager
 		}
 		var tile = new Tile(zId, zX, zZ, tileType);
 		mTiles.Insert(zId,tile);
-
-		var tilePrefab = TileLibrary.GetTile(tileType);
-		var renderTileObject = GameObject.Instantiate(tilePrefab) as GameObject;
-		var renderTile = renderTileObject.AddComponent<TileRenderer>();
-		renderTile.ID = zId;
-		mRenderTiles.Insert(zId,renderTile);
-	}
-
-	public static void ReplaceTile(int zX, int zZ, Tile.eType zType) {
-		Tile oldTile = GetTileAtPosition (zX, zZ);
-		int ID = oldTile.ID;
-		int x = oldTile.PosX;
-		int z = oldTile.PosZ;
-
-		Instance.mTiles.RemoveAt (ID);
-		GameObject.Destroy (Instance.mRenderTiles [ID].gameObject);
-		Instance.mRenderTiles.RemoveAt (ID);
-
-		Instance.CreateTile (ID, x, z, zType);
-	}
-
-	public void RenderTiles()
-	{
-		foreach (TileRenderer renderTile in mRenderTiles)
-		{
-			foreach (Tile tile in mTiles) {
-				if (renderTile.ID == tile.ID) {
-					renderTile.Render (tile);
-				}
-			}
-		}
 	}
 
 	public static Tile GetTileAtPosition(int zX, int zZ)
