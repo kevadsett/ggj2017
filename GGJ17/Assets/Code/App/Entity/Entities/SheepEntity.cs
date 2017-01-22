@@ -63,8 +63,15 @@ public class SheepEntity : Entity
 			}
 		}
 
+		float h = 0.0f, b = 1.0f;
+		if (TileManager.GetTileAtPosition (PosX, PosZ).TileType == Tile.eType.Mound)
+		{
+			h = 0.5f;
+			b = 3.0f;
+		}
+
 		AudioPlayer.PlaySound ("SheepRoll", new Vector3 (PosX, 0.0f, PosZ));
-		viewCube.MoveToPoint (new Vector3 (PosX, 0.0f, PosZ));
+		viewCube.MoveToPoint (new Vector3 (PosX, h, PosZ), b);
 	}
 
 	public bool IsSafe()
