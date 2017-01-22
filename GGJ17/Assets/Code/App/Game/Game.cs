@@ -42,7 +42,7 @@ public class Game : MonoBehaviour
 		mScoreKeeper = new Score();
 		new EntityManager();
 
-		mDog = new DogEntity (0, 0, 0);
+		mDog = new DogEntity (0, 8, 7);
 		mSheepList = new List<SheepEntity> ();
 
 		mCurrentLevel = LevelDataBase.Instance.GetLevel (0);
