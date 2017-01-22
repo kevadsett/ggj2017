@@ -28,6 +28,8 @@ public class Horn : MonoBehaviour
 
 		Instance.mAnimateStartTime = Time.time;
 		Instance.mIsAnimating = true;
+
+		AudioPlayer.PlaySound ("Horn", Vector3.zero);
 	}
 
 	private void Update()

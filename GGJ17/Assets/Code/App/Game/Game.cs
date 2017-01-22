@@ -168,6 +168,8 @@ public class Game : MonoBehaviour
 		{
 			Instance.SetState (eState.LevelSucceeded);
 		}
-		
+
+		var sound = "Success" + sheepCount;
+		AudioPlayer.PlaySound (sound, Vector3.zero);
 	}
 }
