@@ -5,10 +5,9 @@ public class Tile
 {
 	public enum eType
 	{
-		Sand,
-		Water,
+		Ground,
 		House,
-		Safety
+		Mound
 	}
 
 	public int ID { get; private set; }

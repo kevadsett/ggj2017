@@ -19,8 +19,8 @@ public class SheepEntity : Entity
 
 		_moveableTypes = new List<Tile.eType> ()
 		{
-			Tile.eType.Sand,
-			Tile.eType.Safety
+			Tile.eType.Ground,
+			Tile.eType.Mound
 		};
 	}
 

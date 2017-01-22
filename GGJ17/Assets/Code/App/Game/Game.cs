@@ -26,7 +26,7 @@ public class Game : MonoBehaviour
 		Instance = this;
 
 		mTileManager = new TileManager();
-		mTileManager.SetupTiles();
+		mTileManager.SetupTiles(3);
 		new EntityManager();
 
 		var testDog = new DogEntity (0, 0, 0);
@@ -75,7 +75,7 @@ public class Game : MonoBehaviour
 		//place dog
 		//reset tiles
 		GameStartTime = Time.time;
-		Instance.mTileManager.SetupTiles();
+		Instance.mTileManager.SetupTiles(3);
 		Instance.SetState(eState.Game);
 		mRoundStartedTime = Time.time;
 	}
