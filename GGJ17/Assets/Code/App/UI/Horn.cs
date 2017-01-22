@@ -18,7 +18,7 @@ public class Horn : MonoBehaviour
 	private void Start()
 	{
 		Instance = this;
-		m_AnimationTime = -m_AnimationTime;
+		mAnimateStartTime = -m_AnimationTime;
 	}
 
 	public static void TriggerAnimation()
