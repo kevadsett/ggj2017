@@ -4,8 +4,8 @@ using System.Collections;
 public class Game : MonoBehaviour
 {
 	public static float GameStartTime = 0;
-
 	public static Game Instance;
+	public GameObject MoundObject;
 
 	public enum eState
 	{
@@ -24,8 +24,7 @@ public class Game : MonoBehaviour
 	{
 		Instance = this;
 
-		mTileManager = new TileManager();
-		mTileManager.SetupTiles(3);
+		mTileManager = new TileManager(MoundObject);
 		new EntityManager();
 
 		var testDog = new DogEntity (0, 0, 0);

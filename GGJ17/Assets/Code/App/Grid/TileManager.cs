@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class TileManager
 {
+	private GameObject _moundObject;
 	private static TileManager Instance;
 
 	public static int WIDTH;
@@ -12,11 +13,12 @@ public class TileManager
 
 	private GameData mGameData;
 
-	public TileManager()
+	public TileManager(GameObject moundObject)
 	{
 		Instance = this;
 
 		mTiles = new List<Tile>();
+		_moundObject = moundObject;
 	}
 	public void SetupTiles(int moundTargetCount)
 	{
@@ -38,19 +40,24 @@ public class TileManager
 		}
 
 		Tile[] moundTiles = new Tile[moundTargetCount];
-		while (moundTiles.Length < moundTargetCount)
+		int createdMoundsCount = 0;
+		while (createdMoundsCount < moundTargetCount)
 		{
 			int randomIndex = Random.Range (0, id);
 			Tile tile = mTiles[randomIndex];
 			if (tile.TileType == Tile.eType.Ground)
 			{
 				tile.TileType = Tile.eType.Mound;
-				moundTiles [moundTiles.Length] = tile;
+				moundTiles [createdMoundsCount] = tile;
+				createdMoundsCount++;
 			}
 		}
 		for (int i = 0; i < moundTiles.Length; i++)
 		{
-			
+			Tile tile = moundTiles [i];
+			Debug.Log (tile);
+			GameObject moundObject = GameObject.Instantiate (_moundObject);
+			moundObject.transform.position = new Vector3 (tile.PosX, 0, tile.PosZ);
 		}
 	}
 	
