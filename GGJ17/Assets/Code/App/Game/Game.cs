@@ -60,28 +60,33 @@ public class Game : MonoBehaviour
 				SetupGame();
 			}
 			break;
-		case eState.Game:			
-				EntityManager.UpdateEntities (mState);
+		case eState.Game:
+			var timePerRound = mCurrentLevel.WaveIntervalTime;
+			var elapsedTime = (Time.time - mRoundStartedTime);
+			var hornWarningTime = 2f;
 
-				var timePerRound = mCurrentLevel.WaveIntervalTime;
-				var elapsedTime = (Time.time - mRoundStartedTime);
-				if (elapsedTime >= timePerRound - 2f)
-				{
-					Horn.TriggerAnimation();
-				}
-
-				if (elapsedTime >= timePerRound)
-				{
-					mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
-					ToiletWave.TriggerWave();
-					mCurrentWaveIndex++;
-				}
-				UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
-
-			if (Input.GetKeyUp(KeyCode.T))
+			if (Input.GetKeyUp(KeyCode.Space))
 			{
-				GameEnd();
+				if (elapsedTime < timePerRound - 2f)
+				{
+					mRoundStartedTime = Time.time - timePerRound + hornWarningTime;
+				}
 			}
+
+			EntityManager.UpdateEntities (mState);
+
+			if (elapsedTime >= timePerRound - hornWarningTime)
+			{
+				Horn.TriggerAnimation();
+			}
+
+			if (elapsedTime >= timePerRound)
+			{
+				mRoundStartedTime = Time.time + GameDataBase.Instance.GetData(0).TimeToAnimateWave;
+				ToiletWave.TriggerWave();
+				mCurrentWaveIndex++;
+			}
+			UIManager.UpdateUI (Instance.mState, (timePerRound - (Time.time - mRoundStartedTime)));
 			break;
 		case eState.GameEnd:
 			UIManager.UpdateUI(Instance.mState, 0);
