@@ -68,7 +68,7 @@ public class DogEntity : Entity {
 		return shouldMove;
 	}
 
-	public override void Destroy ()
+	public override void Destroy (bool destroyImmediately)
 	{
 		Object.Destroy (_view.gameObject);
 		base.Destroy ();
