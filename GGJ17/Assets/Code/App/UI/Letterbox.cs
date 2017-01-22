@@ -16,6 +16,7 @@ public class Letterbox : MonoBehaviour
 	private float mAnimateStartTime;
 	private RectTransform mRect;
 	private bool mShouldAnimate = false;
+	private bool mHasAnimated = false;
 
 	private void Start()
 	{
@@ -24,6 +25,10 @@ public class Letterbox : MonoBehaviour
 
 	public void StartAnimation()
 	{
+		if (mHasAnimated)
+			return;
+
+		mHasAnimated = true;
 		mAnimateStartTime = Time.time;
 		mShouldAnimate = true;
 	}
