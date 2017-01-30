@@ -209,10 +209,10 @@ public class Game : MonoBehaviour
 		{
 			Instance.SetState (eState.LevelSucceeded);
 			Instance.mNextWaveTimer = 0.0f;
-		}
 
-		var sound = "Success" + sheepCount;
-		AudioPlayer.PlaySound (sound, Vector3.zero);
+			var sound = "Success" + sheepCount;
+			AudioPlayer.PlaySound (sound, Vector3.zero);
+		}
 	}
 
 	public static void MultiplyInterval()
