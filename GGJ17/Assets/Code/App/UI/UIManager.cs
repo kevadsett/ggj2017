@@ -41,10 +41,12 @@ public class UIManager : MonoBehaviour
 	private bool m_isHidingKeyboardInstruction = false;
 	private float m_keyboardInstructionHideStartTime;
 	private AnimationCurve m_InstructionFadeCurve;
+	private int waves;
 
 	private void Awake()
 	{
 		Instance = this;
+		ResetWaves();
 	}
 
 	public static void UpdateUI(Game.eState zGameState, int zWave, float zTimer, bool hideKeyboardInstruction = false, AnimationCurve instructionUIFadeCurve = null)
@@ -78,8 +80,6 @@ public class UIManager : MonoBehaviour
 			Instance.m_EulogyBackground.color = bgColor;
 			Instance.m_EulogyRoot.transform.Translate(Vector2.up * 60f * Time.deltaTime, Space.World);
 		}
-
-		Instance.m_WavesText.text = "" + (zWave + 2);
 	}
 
 	public static void CreateEulogies(List<SheepData> deadSheep)
@@ -103,6 +103,18 @@ public class UIManager : MonoBehaviour
 		{
 			letterBox.StartAnimation();
 		}
+	}
+
+	public static void ResetWaves()
+	{
+		Instance.waves = 1;
+		NextWave ();
+	}
+
+	public static void NextWave()
+	{
+		Instance.waves++;
+		Instance.m_WavesText.text = "" + (Instance.waves);
 	}
 
 	private void UpdateTimer(float zTimer)

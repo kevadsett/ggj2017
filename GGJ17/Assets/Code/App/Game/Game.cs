@@ -117,6 +117,7 @@ public class Game : MonoBehaviour
 			{
 				StartNextLevel ();
 				UIManager.ShowHideTimer (true);
+				UIManager.NextWave ();
 			}
 			break;
 		}
@@ -170,6 +171,7 @@ public class Game : MonoBehaviour
 		Instance.mCurrentLevel = LevelDataBase.Instance.GetLevel (0);
 		Instance.SetupGame();
 		UIManager.ShowHideTimer (true);
+		UIManager.ResetWaves ();
 		Score.Instance.ResetScore();
 	}
 
