@@ -24,6 +24,13 @@ public class MusicPlayer : MonoBehaviour
 			{
 				volumes [i] -= fadeSpeed * Time.deltaTime;
 				musics[i].volume = Mathf.Clamp01 (volumes[i]);
+
+				if (volumes [i] <= 0.0f)
+				{
+					volumes [i] = 0.0f;
+					shouldFades [i] = false;
+					musics [i].Stop ();
+				}
 			}
 		}
 	}
