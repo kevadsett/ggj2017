@@ -169,6 +169,7 @@ public class Game : MonoBehaviour
 		LevelDataBase.Instance.Reset ();
 		Instance.mCurrentLevel = LevelDataBase.Instance.GetLevel (0);
 		Instance.SetupGame();
+		UIManager.ShowHideTimer (true);
 		Score.Instance.ResetScore();
 	}
 
